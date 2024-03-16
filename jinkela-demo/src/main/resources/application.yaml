@@ -1,0 +1,35 @@
+
+server:
+  servlet:
+    session:
+      cookie:
+        name: jinkela_distributed_id
+
+spring:
+  application:
+    name: jinkela-demo
+  data:
+    web:
+      pageable:
+        page-parameter: page
+        size-parameter: size
+  security:
+    white-list: "/favicon.ico,/jinkela/open/publickey"
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DEV_SERVER_DOMAIN}:4306/testadmin?useSSL=false
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
+  jpa:
+    database: MYSQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+
+logging:
+  level:
+    "org.springframework.security": debug
+    "org.springframework.jdbc": debug
+    "org.springframework.web": debug
+    "org.springframework.transaction": debug
