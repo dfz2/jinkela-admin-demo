@@ -1,9 +1,9 @@
 package dev.jinkela.demo.jinkelademo.exceptions;
 
-import java.time.Instant;
 import java.util.List;
 
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -20,7 +20,6 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.util.WebUtils;
-import org.springframework.dao.OptimisticLockingFailureException;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -39,11 +38,7 @@ class ExceptionConfiguration extends ResponseEntityExceptionHandler {
 
       @Override
       public ProblemDetail getBody() {
-        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.CONFLICT);
-        problemDetail.setProperty("errorMessage", "Row was updated or deleted by another transaction.");
-        problemDetail.setProperty("errorCode", HttpStatus.CONFLICT.value());
-        problemDetail.setProperty("timestamp", Instant.now());
-        return problemDetail;
+        return ProblemDetailUtil.asProblemDetail(getStatusCode(), "Row was updated or deleted by another transaction.");
       }
 
     };
@@ -82,10 +77,7 @@ class ExceptionConfiguration extends ResponseEntityExceptionHandler {
 
         if (body instanceof ProblemDetail) {
           ProblemDetail problemDetail = (ProblemDetail) body;
-          problemDetail.setProperty("errorMessage", defaultMessage);
-          problemDetail.setProperty("errorCode", statusCode.value());
-          problemDetail.setProperty("timestamp", Instant.now());
-          body = problemDetail;
+          body = ProblemDetailUtil.withProblemDetail(problemDetail, statusCode, defaultMessage);
         }
 
       }
