@@ -25,9 +25,8 @@ service.interceptors.response.use((res) => {
     // });
 
     if (status === 401) {
-      alert(1)
-      window.location.href('/login')
-      return false
+      window.location.href = `/login?continue=${window.location.pathname}`
+      return Promise.reject(error);
     }
 
     if (status === 400 || status === 409) {

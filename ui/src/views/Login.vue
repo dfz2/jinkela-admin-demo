@@ -6,6 +6,7 @@ import { useRoute, useRouter } from "vue-router";
 import { INDEX } from "@/router/routes.js";
 import { getPublicKeyApi, loginApi } from "@/api/user";
 import JSEncrypt from 'jsencrypt/bin/jsencrypt';
+import { useUrlSearchParams } from '@vueuse/core'
 
 const jsEncrypt = new JSEncrypt();
 const formRef = ref(null)
@@ -29,11 +30,19 @@ onMounted(async () => {
 const handleLogin = async () => {
   await formRef.value?.validate()
   loading.value = true
+  // ElMessage({
+  //   message: "登录中...",
+  //   icon: Loading
+  // })
   try {
     // const res = await getPublicKeyApi({})
     const res = await getPublicKeyApi()
     jsEncrypt.setPublicKey(res.publicKey);
     await loginApi({ username: state.username, password: jsEncrypt.encrypt(state.password) })
+    ElMessage({
+      message: "登录成功",
+      type: 'success'
+    })
   } catch (err) {
     loading.value = false
     ElMessage({
@@ -42,10 +51,8 @@ const handleLogin = async () => {
     });
   }
 
-  const {
-    query: { redirect }
-  } = route
-  const path = typeof redirect === 'string' ? redirect : INDEX
+  const params = useUrlSearchParams('history')
+  const path = typeof params.continue === 'string' ? params.continue : INDEX
   router.push(path)
 };
 

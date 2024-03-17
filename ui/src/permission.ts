@@ -66,7 +66,7 @@ router.beforeEach(async (to, _from, next) => {
         next({ ...to, replace: true })
       } catch (err) {
         // clearAuthInfo()
-        next({ path: '/login', query: { redirect: to.fullPath } })
+        next({ path: '/login', query: { continue: to.fullPath } })
       }
     }
   }
