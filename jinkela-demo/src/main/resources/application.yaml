@@ -20,11 +20,6 @@ spring:
     url: jdbc:mysql://${DEV_SERVER_DOMAIN}:4306/testadmin?useSSL=false
     username: ${MYSQL_USER}
     password: ${MYSQL_PASSWORD}
-  jpa:
-    database: MYSQL
-    show-sql: true
-    hibernate:
-      ddl-auto: none
 
 
 logging:
