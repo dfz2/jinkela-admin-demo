@@ -3,16 +3,16 @@ package dev.jinkela.demo.jinkelademo.datas.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.relational.core.mapping.Table;
+
 import dev.jinkela.demo.jinkelademo.datas.AuditMetadata;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
-@Entity
 @Table(name = "_jinkela_menus")
 public class JinkelaMenu extends AuditMetadata {
 
@@ -33,6 +33,8 @@ public class JinkelaMenu extends AuditMetadata {
   private Boolean hidden;
   private Boolean enabled;
 
+
+  @Transient
   private transient List<JinkelaMenu> children;
 
   public List<JinkelaMenu> getChildren(Long parentId, List<JinkelaMenu> menuItems) {

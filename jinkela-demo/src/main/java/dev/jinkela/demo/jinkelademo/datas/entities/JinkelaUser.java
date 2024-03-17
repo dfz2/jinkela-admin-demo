@@ -4,20 +4,19 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import dev.jinkela.demo.jinkelademo.datas.AuditMetadata;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
-@Entity
 @Table(name = "_jinkela_users")
 public class JinkelaUser extends AuditMetadata implements UserDetails, CredentialsContainer {
 
@@ -25,8 +24,10 @@ public class JinkelaUser extends AuditMetadata implements UserDetails, Credentia
   private Long id;
   private String nickname;
   private String username;
-  private String password;
+  private transient String password;
   private Boolean enabled;
+
+  @Transient
   private transient Set<GrantedAuthority> authorities = new HashSet<>();
   private boolean accountNonExpired;
   private boolean accountNonLocked;

@@ -46,8 +46,6 @@ class JinkelaRoleServiceImpl implements JinkelaRoleService {
   @Override
   public void mmodifyRoleToDb(Long jinkelaRoleId, JinkelaRoleModifyDTO jinkelaRoleModifyDTO) {
     JinkelaRole jinkelaRoleFromDb = jinkelaRoleRepository.findById(jinkelaRoleId).orElseThrow(RoleNotFoundException::new);
-    jinkelaRoleFromDb = new JinkelaRole();
-    jinkelaRoleFromDb.setId(jinkelaRoleId);
     jinkelaRoleFromDb.setName(jinkelaRoleModifyDTO.getName());
     jinkelaRoleFromDb.setVersion(jinkelaRoleModifyDTO.getVersion());
     jinkelaRoleRepository.save(jinkelaRoleFromDb);

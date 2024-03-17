@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
-import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.ErrorResponse;
@@ -21,6 +20,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.util.WebUtils;
+import org.springframework.dao.OptimisticLockingFailureException;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -28,8 +28,8 @@ import jakarta.servlet.http.HttpServletResponse;
 class ExceptionConfiguration extends ResponseEntityExceptionHandler {
 
   // ObjectOptimisticLockingFailureException
-  @ExceptionHandler({ ObjectOptimisticLockingFailureException.class })
-  public ErrorResponse handleObjectOptimisticLockingFailureException(ObjectOptimisticLockingFailureException e) {
+  @ExceptionHandler({ OptimisticLockingFailureException.class })
+  public ErrorResponse handleObjectOptimisticLockingFailureException(OptimisticLockingFailureException e) {
     return new ErrorResponse() {
 
       @Override
