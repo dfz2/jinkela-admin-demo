@@ -32,7 +32,7 @@ router.beforeEach(async (to, _from, next) => {
     } else {
       try {
         await userStore.getUserInfo()
-        await userStore.getRoutes()
+        await userStore.getRoutes(userStore.userInfo.id)
         const routes = userStore.routes
         // 找到第一个有效路由
         const routeName = findFirstValidRoute(routes)

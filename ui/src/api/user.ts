@@ -38,9 +38,9 @@ export const getPublicKeyApi = () => {
 }
 
 
-export const getMenusApi = () => {
+export const getMenusApi = (jinkelaUserId: string) => {
     return service({
-        url: '/api/jinkela/s/menus',
+        url: `/api/jinkela/s/${jinkelaUserId}/menus`,
         method: 'GET',
     })
 }
