@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-JinkelaDemoApplication<jinkela-demo>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "dev.jinkela.demo.jinkelademo.JinkelaDemoApplication",
+      "projectName": "jinkela-demo",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}

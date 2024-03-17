@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dev.jinkela.demo.jinkelademo.datas.entities.JinkelaRole;
-import dev.jinkela.demo.jinkelademo.datas.entities.JinkelaUser;
 import dev.jinkela.demo.jinkelademo.datas.repositories.JinkelaRoleRepository;
 import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleCreateDTO;
 import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleListPageDTO;
@@ -17,9 +16,7 @@ import dev.jinkela.demo.jinkelademo.exceptions.RoleNotFoundException;
 import dev.jinkela.demo.jinkelademo.services.JinkelaRoleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = false)
@@ -43,8 +40,7 @@ class JinkelaRoleServiceImpl implements JinkelaRoleService {
   @Transactional
   @Override
   public void mmodifyRoleToDb(Long jinkelaRoleId, @Valid JinkelaRoleModifyDTO jinkelaRoleModifyDTO) {
-    JinkelaRole jinkelaRoleFromDb = jinkelaRoleRepository.findById(jinkelaRoleId)
-        .orElseThrow(RoleNotFoundException::new);
+    JinkelaRole jinkelaRoleFromDb = jinkelaRoleRepository.findById(jinkelaRoleId).orElseThrow(RoleNotFoundException::new);
     jinkelaRoleFromDb.setId(jinkelaRoleId);
     jinkelaRoleFromDb.setName(jinkelaRoleModifyDTO.getName());
     jinkelaRoleRepository.save(jinkelaRoleFromDb);

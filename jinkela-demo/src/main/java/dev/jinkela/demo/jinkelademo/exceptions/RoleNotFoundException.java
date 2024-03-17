@@ -1,9 +1,11 @@
 package dev.jinkela.demo.jinkelademo.exceptions;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "角色不存在")
-public class RoleNotFoundException extends RuntimeException{
-  
+public class RoleNotFoundException extends BaseJinkelaErrorResponseException {
+
+  public RoleNotFoundException() {
+    super(HttpStatus.NOT_FOUND, "角色不存在");
+  }
+
 }

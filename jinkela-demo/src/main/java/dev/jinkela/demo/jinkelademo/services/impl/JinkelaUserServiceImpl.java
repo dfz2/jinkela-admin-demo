@@ -15,9 +15,7 @@ import dev.jinkela.demo.jinkelademo.dtos.JinkelaUserListPageDTO;
 import dev.jinkela.demo.jinkelademo.exceptions.UserNotFoundException;
 import dev.jinkela.demo.jinkelademo.services.JinkelaUserService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -26,7 +24,8 @@ class JinkelaUserServiceImpl implements JinkelaUserService {
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    return jinkelaUserRepository.findJinkelaUserByUsername(username).orElseThrow(() -> new UsernameNotFoundException("用户名密码错误"));
+    return jinkelaUserRepository.findJinkelaUserByUsername(username)
+        .orElseThrow(() -> new UsernameNotFoundException("用户名密码错误"));
   }
 
   @Override
@@ -38,10 +37,10 @@ class JinkelaUserServiceImpl implements JinkelaUserService {
   @Override
   public Page<JinkelaUser> listAllJikelaUsers(JinkelaUserListPageDTO request, Pageable pageable) {
     JinkelaUser probe = new JinkelaUser();
-    probe.setEnabled(true);
     probe.setUsername(request.getUsernmae());
 
-    final ExampleMatcher matching = ExampleMatcher.matching().withIgnoreNullValues().withMatcher("username", ExampleMatcher.GenericPropertyMatchers.contains());
+    final String[] ignorePaths = { "accountNonExpired", "accountNonLocked", "credentialsNonExpired", "enabled" };
+    final ExampleMatcher matching = ExampleMatcher.matching().withIgnoreNullValues().withIgnorePaths(ignorePaths).withMatcher("username", ExampleMatcher.GenericPropertyMatchers.contains());
     Example<JinkelaUser> example = Example.of(probe, matching);
     return jinkelaUserRepository.findAll(example, pageable);
   }

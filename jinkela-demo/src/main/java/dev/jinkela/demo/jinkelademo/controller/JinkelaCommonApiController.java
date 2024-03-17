@@ -2,7 +2,6 @@ package dev.jinkela.demo.jinkelademo.controller;
 
 import java.util.List;
 
-import org.hibernate.annotations.processing.Find;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 public class JinkelaCommonApiController {
   private final JinkelaMenuService jinkelaMenuService;
 
-  @GetMapping("/currentUser")
+  @GetMapping("/userinfo")
   public JinkelaUser loadCurrentJinkelaUser(@AuthenticationPrincipal JinkelaUser currentUser) {
     return currentUser;
   }

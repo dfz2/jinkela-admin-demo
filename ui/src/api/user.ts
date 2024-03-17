@@ -24,7 +24,7 @@ export const logoutApi = () => {
 
 export const getUserinfoApi = () => {
     return service({
-        url: '/api/jinkela/s/currentUser',
+        url: '/api/jinkela/s/userinfo',
         method: 'GET',
     })
 }

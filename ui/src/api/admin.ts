@@ -3,7 +3,7 @@ import service from "@/api/service.ts";
 
 // 管理员列表
 export function adminLists(params) {
-    return service({ url: '/api/system/admin/list', method: 'GET', params })
+    return service({ url: '/api/jinkela/users', method: 'GET', params })
 }
 
 // 管理员添加

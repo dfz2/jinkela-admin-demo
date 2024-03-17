@@ -99,19 +99,12 @@ onMounted(() => {
               <el-avatar :size="50" :src="row.avatar"></el-avatar>
             </template>
           </el-table-column>
-          <el-table-column label="账号" prop="username" min-width="100" />
-          <el-table-column label="名称" prop="nickname" min-width="100" />
-          <el-table-column label="角色" prop="role" show-tooltip-when-overflow min-width="100" />
-          <el-table-column label="部门" prop="dept" show-tooltip-when-overflow min-width="100" />
-          <el-table-column label="创建时间" prop="createTime" min-width="180" />
+          <el-table-column label="登录账号" prop="username" min-width="100" />
+          <el-table-column label="昵称" prop="nickname" min-width="100" />
+          <el-table-column label="状态" prop="enabled" min-width="120" />
+          <el-table-column label="创建时间" prop="createdAt" min-width="180" />
           <el-table-column label="最近登录时间" prop="lastLoginTime" min-width="180" />
           <el-table-column label="最近登录IP" prop="lastLoginIp" min-width="120" />
-          <el-table-column label="状态" min-width="100">
-            <template #default="{ row }">
-              <el-switch v-perms="['system:admin:disable']" v-if="row.id != 1" :model-value="row.isDisable"
-                :active-value="0" :inactive-value="1" @change="changeStatus($event, row.id)" />
-            </template>
-          </el-table-column>
           <el-table-column label="操作" width="120" fixed="right">
             <template #default="{ row }">
               <el-button v-perms="['system:admin:edit']" type="primary" link @click="handleEdit(row)">

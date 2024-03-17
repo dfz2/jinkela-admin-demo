@@ -10,9 +10,7 @@ import dev.jinkela.demo.jinkelademo.datas.entities.JinkelaMenu;
 import dev.jinkela.demo.jinkelademo.datas.repositories.JinkelaMenuRepository;
 import dev.jinkela.demo.jinkelademo.services.JinkelaMenuService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)

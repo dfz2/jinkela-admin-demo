@@ -17,7 +17,7 @@ export function roleDetail(params) {
 
 // 添加角色
 export function roleAdd(params) {
-    return service({ url: '/api/system/role/create', method: 'POST', data: params })
+    return service({ url: '/api/jinkela/roles', method: 'POST', data: params })
 }
 // 编辑角色
 export function roleEdit(params) {
