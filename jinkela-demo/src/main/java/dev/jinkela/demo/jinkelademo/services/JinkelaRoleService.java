@@ -8,6 +8,7 @@ import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleCreateDTO;
 import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleListPageDTO;
 import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleModifyDTO;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 public interface JinkelaRoleService {
 
@@ -16,5 +17,7 @@ public interface JinkelaRoleService {
   void mmodifyRoleToDb(Long jinkelaRoleId, @Valid JinkelaRoleModifyDTO jinkelaRoleModifyDTO);
 
   Page<JinkelaRole> listAllRoles(JinkelaRoleListPageDTO jinkelaRoleListPageDTO, Pageable pageable);
+
+  JinkelaRole getJinkelaRoleById(@NotNull Long jinkelaRoleId);
 
 }

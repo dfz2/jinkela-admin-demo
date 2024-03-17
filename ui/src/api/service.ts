@@ -16,16 +16,28 @@ service.interceptors.response.use((res) => {
   (error) => {
     console.log(error)
     let { response, message } = error;
-    const { status } = response
+
+    console.log(error)
+    const { status, data } = response
     // ElMessage({
     //     message: message,
     //     type: 'error',
     // });
 
     if (status === 401) {
+      alert(1)
       window.location.href('/login')
       return false
     }
+
+    if (status === 400 || status === 409) {
+      const { errorMessage } = data
+      ElMessage({
+        message: errorMessage,
+        type: 'error',
+      })
+    }
+
 
     return Promise.reject(error);
   })

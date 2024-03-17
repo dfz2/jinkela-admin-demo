@@ -14,7 +14,6 @@ import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleListPageDTO;
 import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleModifyDTO;
 import dev.jinkela.demo.jinkelademo.exceptions.RoleNotFoundException;
 import dev.jinkela.demo.jinkelademo.services.JinkelaRoleService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -26,9 +25,15 @@ class JinkelaRoleServiceImpl implements JinkelaRoleService {
   @Override
   public Page<JinkelaRole> listAllRoles(JinkelaRoleListPageDTO request, Pageable pageable) {
     JinkelaRole probe = new JinkelaRole(request.getName());
-    final ExampleMatcher matching = ExampleMatcher.matching().withIgnoreNullValues().withMatcher("name", ExampleMatcher.GenericPropertyMatchers.contains());
+    final ExampleMatcher matching = ExampleMatcher.matching().withIgnoreNullValues().withMatcher("name",
+        ExampleMatcher.GenericPropertyMatchers.contains());
     Example<JinkelaRole> example = Example.of(probe, matching);
     return jinkelaRoleRepository.findAll(example, pageable);
+  }
+
+  @Override
+  public JinkelaRole getJinkelaRoleById(Long jinkelaRoleId) {
+    return jinkelaRoleRepository.findById(jinkelaRoleId).orElseThrow(RoleNotFoundException::new);
   }
 
   @Transactional
@@ -39,10 +44,12 @@ class JinkelaRoleServiceImpl implements JinkelaRoleService {
 
   @Transactional
   @Override
-  public void mmodifyRoleToDb(Long jinkelaRoleId, @Valid JinkelaRoleModifyDTO jinkelaRoleModifyDTO) {
+  public void mmodifyRoleToDb(Long jinkelaRoleId, JinkelaRoleModifyDTO jinkelaRoleModifyDTO) {
     JinkelaRole jinkelaRoleFromDb = jinkelaRoleRepository.findById(jinkelaRoleId).orElseThrow(RoleNotFoundException::new);
+    jinkelaRoleFromDb = new JinkelaRole();
     jinkelaRoleFromDb.setId(jinkelaRoleId);
     jinkelaRoleFromDb.setName(jinkelaRoleModifyDTO.getName());
+    jinkelaRoleFromDb.setVersion(jinkelaRoleModifyDTO.getVersion());
     jinkelaRoleRepository.save(jinkelaRoleFromDb);
   }
 

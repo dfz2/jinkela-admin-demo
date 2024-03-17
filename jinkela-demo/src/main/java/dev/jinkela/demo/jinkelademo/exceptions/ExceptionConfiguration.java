@@ -10,10 +10,12 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
@@ -25,10 +27,33 @@ import jakarta.servlet.http.HttpServletResponse;
 @RestControllerAdvice
 class ExceptionConfiguration extends ResponseEntityExceptionHandler {
 
+  // ObjectOptimisticLockingFailureException
+  @ExceptionHandler({ ObjectOptimisticLockingFailureException.class })
+  public ErrorResponse handleObjectOptimisticLockingFailureException(ObjectOptimisticLockingFailureException e) {
+    return new ErrorResponse() {
 
+      @Override
+      public HttpStatusCode getStatusCode() {
+        return HttpStatus.CONFLICT;
+      }
+
+      @Override
+      public ProblemDetail getBody() {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.CONFLICT);
+        problemDetail.setProperty("errorMessage", "Row was updated or deleted by another transaction.");
+        problemDetail.setProperty("errorCode", HttpStatus.CONFLICT.value());
+        problemDetail.setProperty("timestamp", Instant.now());
+        return problemDetail;
+      }
+
+    };
+  }
+
+  // Override handleExceptionInternal
   @Nullable
   @Override
-  protected ResponseEntity<Object> handleExceptionInternal(Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatusCode statusCode, WebRequest request) {
+  protected ResponseEntity<Object> handleExceptionInternal(Exception ex, @Nullable Object body, HttpHeaders headers,
+      HttpStatusCode statusCode, WebRequest request) {
 
     if (request instanceof ServletWebRequest servletWebRequest) {
       HttpServletResponse response = servletWebRequest.getResponse();

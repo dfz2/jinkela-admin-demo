@@ -12,7 +12,7 @@ export function roleAll(params) {
 
 // 角色列表
 export function roleDetail(params) {
-    return service({ url: '/api/system/role', method: 'GET', params })
+    return service({ url: `/api/jinkela/roles/${params.id}`, method: 'GET' })
 }
 
 // 添加角色
@@ -21,7 +21,7 @@ export function roleAdd(params) {
 }
 // 编辑角色
 export function roleEdit(params) {
-    return service({ url: '/api/system/role/update', method: 'POST', data: params })
+    return service({ url: `/api/jinkela/roles/${params.id}`, method: 'PUT', data: params })
 }
 // 删除角色
 export function roleDelete(params) {

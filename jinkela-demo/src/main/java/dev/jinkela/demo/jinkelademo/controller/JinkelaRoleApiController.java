@@ -4,7 +4,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,14 +35,19 @@ public class JinkelaRoleApiController {
     return jinkelaRoleService.listAllRoles(jinkelaRoleListPageDTO, pageable);
   }
 
+
+  @GetMapping("{jinkelaRoleId}")
+  public JinkelaRole getJinkelaRoleById(@PathVariable("jinkelaRoleId") @NotNull Long jinkelaRoleId) {
+    return jinkelaRoleService.getJinkelaRoleById(jinkelaRoleId);
+  }
+
   @PostMapping
   public void addNewRoleToDb(@RequestBody @Valid JinkelaRoleCreateDTO jinkelaRoleCreateDTO) {
     jinkelaRoleService.addNewRoleToDb(jinkelaRoleCreateDTO);
   }
 
-  @PostMapping("/{jinkelaRoleId}")
-  public void mmodifyRoleToDb(@NotNull Long jinkelaRoleId,
-      @RequestBody @Valid JinkelaRoleModifyDTO jinkelaRoleModifyDTO) {
+  @PutMapping("/{jinkelaRoleId}")
+  public void mmodifyRoleToDb(@PathVariable("jinkelaRoleId") @NotNull Long jinkelaRoleId, @RequestBody @Valid JinkelaRoleModifyDTO jinkelaRoleModifyDTO) {
     jinkelaRoleService.mmodifyRoleToDb(jinkelaRoleId, jinkelaRoleModifyDTO);
   }
 

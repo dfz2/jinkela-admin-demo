@@ -16,7 +16,7 @@ const popupTitle = computed(() => {
 
 const state = reactive({
   id: '',
-  roleName: '',
+  name: '',
   remark: '',
   sort: 0,
   version: null,
@@ -25,7 +25,7 @@ const state = reactive({
 })
 
 const rules = {
-  roleName: [
+  name: [
     {
       required: true,
       message: '请输入名称',
@@ -76,8 +76,8 @@ defineExpose({
   <div class="edit-popup">
     <Popup ref="popupRef" :title="popupTitle" :async="true" width="550px" @confirm="handleSubmit" @close="handleClose">
       <el-form class="ls-form" ref="formRef" :rules="rules" :model="state" label-width="60px">
-        <el-form-item label="名称" prop="roleName">
-          <el-input class="ls-input" v-model="state.roleName" placeholder="请输入名称" clearable />
+        <el-form-item label="名称" prop="name">
+          <el-input class="ls-input" v-model="state.name" placeholder="请输入名称" clearable />
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input v-model="state.remark" type="textarea" :autosize="{ minRows: 4, maxRows: 6 }" placeholder="请输入备注"
@@ -86,7 +86,7 @@ defineExpose({
         <el-form-item label="排序" prop="sort">
           <el-input-number v-model="state.sort" />
         </el-form-item>
-        <el-form-item label="状态" prop="sort">
+        <el-form-item label="状态" prop="enabled">
           <el-radio-group v-model="state.enabled">
             <el-radio :label="0">正常</el-radio>
             <el-radio :label="1">停用</el-radio>
