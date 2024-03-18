@@ -69,8 +69,8 @@ getLists()
             <el-table-column prop="id" label="ID" min-width="100" />
             <el-table-column prop="name" label="名称" min-width="150" />
             <el-table-column prop="remark" label="备注" min-width="150" show-overflow-tooltip />
-            <el-table-column prop="sort" label="排序" min-width="100" />
-            <el-table-column prop="createTime" label="创建时间" min-width="180" />
+            <el-table-column prop="enabled" label="可用状态" min-width="100" />
+            <el-table-column prop="createdAt" label="创建时间" min-width="180" />
             <el-table-column label="操作" width="290" fixed="right">
               <template #default="{ row }">
                 <el-button v-perms="['system:role:edit']" link type="primary" @click="handleEdit(row)">

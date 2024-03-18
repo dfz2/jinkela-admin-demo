@@ -16,6 +16,7 @@ public class JinkelaRole extends AuditMetadata {
   @Id
   private Long id;
   private String name;
+  private String remark;
   private Boolean enabled;
 
   @Version

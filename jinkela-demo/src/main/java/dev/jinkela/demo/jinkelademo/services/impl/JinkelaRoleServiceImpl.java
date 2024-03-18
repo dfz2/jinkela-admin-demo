@@ -39,7 +39,11 @@ class JinkelaRoleServiceImpl implements JinkelaRoleService {
   @Transactional
   @Override
   public void addNewRoleToDb(JinkelaRoleCreateDTO jinkelaRoleCreateDTO) {
-    jinkelaRoleRepository.save(new JinkelaRole(jinkelaRoleCreateDTO.getName()));
+    JinkelaRole saveJinkelaRoleToDb = new JinkelaRole();
+    saveJinkelaRoleToDb.setName(jinkelaRoleCreateDTO.getName());
+    saveJinkelaRoleToDb.setRemark(jinkelaRoleCreateDTO.getRemark());
+    saveJinkelaRoleToDb.setEnabled(true);
+    jinkelaRoleRepository.save(saveJinkelaRoleToDb);
   }
 
   @Transactional
@@ -47,6 +51,7 @@ class JinkelaRoleServiceImpl implements JinkelaRoleService {
   public void mmodifyRoleToDb(Long jinkelaRoleId, JinkelaRoleModifyDTO jinkelaRoleModifyDTO) {
     JinkelaRole jinkelaRoleFromDb = jinkelaRoleRepository.findById(jinkelaRoleId).orElseThrow(RoleNotFoundException::new);
     jinkelaRoleFromDb.setName(jinkelaRoleModifyDTO.getName());
+    jinkelaRoleFromDb.setRemark(jinkelaRoleModifyDTO.getRemark());
     jinkelaRoleFromDb.setVersion(jinkelaRoleModifyDTO.getVersion());
     jinkelaRoleRepository.save(jinkelaRoleFromDb);
   }

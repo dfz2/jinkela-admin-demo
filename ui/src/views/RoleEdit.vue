@@ -74,23 +74,14 @@ defineExpose({
 
 <template>
   <div class="edit-popup">
-    <Popup ref="popupRef" :title="popupTitle" :async="true" width="550px" @confirm="handleSubmit" @close="handleClose">
-      <el-form class="ls-form" ref="formRef" :rules="rules" :model="state" label-width="60px">
-        <el-form-item label="名称" prop="name">
-          <el-input class="ls-input" v-model="state.name" placeholder="请输入名称" clearable />
+    <Popup ref="popupRef" :title="popupTitle" :async="true" width="500px" @confirm="handleSubmit" @close="handleClose">
+      <el-form class="ls-form" ref="formRef" :rules="rules" :model="state" label-width="80px">
+        <el-form-item label="角色名称" prop="name">
+          <el-input class="ls-input" v-model="state.name" maxlength="100"  placeholder="请输入名称" clearable />
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input v-model="state.remark" type="textarea" :autosize="{ minRows: 4, maxRows: 6 }" placeholder="请输入备注"
             maxlength="200" show-word-limit />
-        </el-form-item>
-        <el-form-item label="排序" prop="sort">
-          <el-input-number v-model="state.sort" />
-        </el-form-item>
-        <el-form-item label="状态" prop="enabled">
-          <el-radio-group v-model="state.enabled">
-            <el-radio :label="0">正常</el-radio>
-            <el-radio :label="1">停用</el-radio>
-          </el-radio-group>
         </el-form-item>
       </el-form>
     </Popup>
