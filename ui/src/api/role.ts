@@ -25,5 +25,5 @@ export function roleEdit(params) {
 }
 // 删除角色
 export function roleDelete(params) {
-    return service({ url: '/api/system/role/delete', method: 'POST', data: params })
+    return service({ url: `/api/jinkela/roles/${params.id}`, method: 'DELETE', data: params })
 }

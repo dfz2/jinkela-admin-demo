@@ -67,7 +67,7 @@ class JinkelaDataConfiguration extends AbstractJdbcConfiguration {
   protected List<?> userConverters() {
     Set<Class<?>> classes = TypeScanner.typeScanner(AbstractJdbcConfiguration.class.getClassLoader()) //
         .forTypesAnnotatedWith(WritingConverter.class, ReadingConverter.class) //
-        .scanPackages("dog.sneaky.demo.datas.converters") //
+        .scanPackages("dev.jinkela.demo.jinkelademo.datas.converters") //
         .collectAsSet();
     return classes.stream().map(it -> Try.of(() -> it.getDeclaredConstructor().newInstance()).get()).toList();
   }

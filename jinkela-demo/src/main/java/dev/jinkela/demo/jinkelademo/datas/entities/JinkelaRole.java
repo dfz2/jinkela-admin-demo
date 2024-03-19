@@ -1,5 +1,7 @@
 package dev.jinkela.demo.jinkelademo.datas.entities;
 
+import java.time.LocalDateTime;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.relational.core.mapping.Table;
@@ -18,6 +20,7 @@ public class JinkelaRole extends AuditMetadata {
   private String name;
   private String remark;
   private Boolean enabled;
+  private Boolean deleted;
 
   @Version
   private Integer version;
@@ -28,6 +31,7 @@ public class JinkelaRole extends AuditMetadata {
   public JinkelaRole(String name) {
     this.name = name;
     this.enabled = true;
+    this.deleted = false;
   }
 
 }

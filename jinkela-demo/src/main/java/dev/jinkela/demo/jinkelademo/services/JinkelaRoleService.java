@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 
 import dev.jinkela.demo.jinkelademo.datas.entities.JinkelaRole;
 import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleCreateDTO;
+import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleDeleteDTO;
 import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleListPageDTO;
 import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleModifyDTO;
 import jakarta.validation.Valid;
@@ -19,5 +20,7 @@ public interface JinkelaRoleService {
   Page<JinkelaRole> listAllRoles(JinkelaRoleListPageDTO jinkelaRoleListPageDTO, Pageable pageable);
 
   JinkelaRole getJinkelaRoleById(@NotNull Long jinkelaRoleId);
+
+  void deleteRoleFromDb(@NotNull Long jinkelaRoleId, JinkelaRoleDeleteDTO jinkelaRoleDeleteDTO);
 
 }

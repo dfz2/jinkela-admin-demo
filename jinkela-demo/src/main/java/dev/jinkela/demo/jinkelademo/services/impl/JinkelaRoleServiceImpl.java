@@ -10,10 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import dev.jinkela.demo.jinkelademo.datas.entities.JinkelaRole;
 import dev.jinkela.demo.jinkelademo.datas.repositories.JinkelaRoleRepository;
 import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleCreateDTO;
+import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleDeleteDTO;
 import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleListPageDTO;
 import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleModifyDTO;
 import dev.jinkela.demo.jinkelademo.exceptions.RoleNotFoundException;
 import dev.jinkela.demo.jinkelademo.services.JinkelaRoleService;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -24,7 +26,9 @@ class JinkelaRoleServiceImpl implements JinkelaRoleService {
 
   @Override
   public Page<JinkelaRole> listAllRoles(JinkelaRoleListPageDTO request, Pageable pageable) {
-    JinkelaRole probe = new JinkelaRole(request.getName());
+    JinkelaRole probe = new JinkelaRole();
+    probe.setName(request.getName());
+    probe.setDeleted(false);
     final ExampleMatcher matching = ExampleMatcher.matching().withIgnoreNullValues().withMatcher("name",
         ExampleMatcher.GenericPropertyMatchers.contains());
     Example<JinkelaRole> example = Example.of(probe, matching);
@@ -53,6 +57,15 @@ class JinkelaRoleServiceImpl implements JinkelaRoleService {
     jinkelaRoleFromDb.setName(jinkelaRoleModifyDTO.getName());
     jinkelaRoleFromDb.setRemark(jinkelaRoleModifyDTO.getRemark());
     jinkelaRoleFromDb.setVersion(jinkelaRoleModifyDTO.getVersion());
+    jinkelaRoleRepository.save(jinkelaRoleFromDb);
+  }
+
+  @Transactional
+  @Override
+  public void deleteRoleFromDb(@NotNull Long jinkelaRoleId, JinkelaRoleDeleteDTO jinkelaRoleDeleteDTO) {
+    JinkelaRole jinkelaRoleFromDb = jinkelaRoleRepository.findById(jinkelaRoleId).orElseThrow(RoleNotFoundException::new);
+    jinkelaRoleFromDb.setDeleted(true);
+    jinkelaRoleFromDb.setVersion(jinkelaRoleDeleteDTO.getVersion());
     jinkelaRoleRepository.save(jinkelaRoleFromDb);
   }
 
