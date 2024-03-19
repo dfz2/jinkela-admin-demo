@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 public class UsernameConflictException extends BaseJinkelaErrorResponseException{
 
   public UsernameConflictException() {
-    super(HttpStatus.CONFLICT, "登录用户名已存在");
+    super(HttpStatus.CONFLICT, "登录账号已存在");
   }
   
 }
