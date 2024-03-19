@@ -33,6 +33,10 @@ public class JinkelaUser extends AuditMetadata implements UserDetails, Credentia
   private Boolean accountNonLocked;
   private Boolean credentialsNonExpired;
 
+
+  public JinkelaUser() {
+  }
+
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return authorities;

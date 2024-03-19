@@ -22,4 +22,5 @@ public interface JinkelaUserRepository extends BaseJinkelaRepository<JinkelaUser
       """)
   java.util.Set<String> listAllPermissionsByJinkelaUserId(Long jinkelaUserId);
 
+
 }

@@ -3,6 +3,7 @@ package dev.jinkela.demo.jinkelademo.datas;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import javax.sql.DataSource;
 
@@ -19,7 +20,11 @@ import org.springframework.data.web.config.PageableHandlerMethodArgumentResolver
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.TransactionManager;
 
 import dev.jinkela.demo.jinkelademo.datas.entities.JinkelaUser;
@@ -32,10 +37,20 @@ class JinkelaDataConfiguration extends AbstractJdbcConfiguration {
 
   @Bean
   AuditorAware<String> auditorAwareRef() {
-    return () -> {
-      JinkelaUser principal = (JinkelaUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-      return Optional.ofNullable(String.valueOf(principal.getId()));
+    return new AuditorAware<String>() {
+
+      @Override
+      public Optional<String> getCurrentAuditor() {
+        return Optional.ofNullable(SecurityContextHolder.getContext())
+            .map(SecurityContext::getAuthentication)
+            .filter(Authentication::isAuthenticated)
+            .map(Authentication::getPrincipal)
+            .map(JinkelaUser.class::cast)
+            .map(it -> String.valueOf(it.getId()));
+      }
+
     };
+
   }
 
   @Bean

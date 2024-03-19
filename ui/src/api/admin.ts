@@ -8,7 +8,7 @@ export function adminLists(params) {
 
 // 管理员添加
 export function adminAdd(params) {
-    return service({ url: '/api/system/admin/add', method: 'POST', params })
+    return service({ url: '/api/jinkela/users', method: 'POST', data: params })
 }
 
 // 管理员编辑

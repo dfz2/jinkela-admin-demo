@@ -6,60 +6,9 @@
                 <el-form-item label="账号" prop="username">
                     <el-input v-model="formData.username" :disabled="isRoot" placeholder="请输入账号" clearable />
                 </el-form-item>
-                <el-form-item label="头像">
-                    <div>
-                        <div>
-                            <material-picker v-model="formData.avatar" :limit="1" />
-                        </div>
-                        <div class="form-tips">建议尺寸：100*100px，支持jpg，jpeg，png格式</div>
-                    </div>
-                </el-form-item>
+
                 <el-form-item label="名称" prop="nickname">
                     <el-input v-model="formData.nickname" placeholder="请输入名称" clearable />
-                </el-form-item>
-                <el-form-item label="归属部门" prop="deptIds">
-                    <el-tree-select class="flex-1" v-model="formData.deptIds" :data="optionsData.dept" clearable
-                        node-key="id" multiple :props="{
-            value: 'id',
-            label: 'name',
-            disabled(data) {
-                return !!data.isStop
-            }
-        }" check-strictly :default-expand-all="true" placeholder="请选择上级部门" />
-                </el-form-item>
-                <el-form-item label="岗位" prop="postIds">
-                    <el-select class="flex-1" clearable multiple v-model="formData.postIds" placeholder="请选择岗位">
-                        <el-option v-for="(item, index) in optionsData.post" :key="index" :label="item.name"
-                            :value="item.id" />
-                    </el-select>
-                </el-form-item>
-
-                <el-form-item label="角色" prop="roleIds">
-                    <el-select v-model="formData.roleIds" :disabled="isRoot" multiple class="flex-1" clearable
-                        placeholder="请选择角色">
-                        <el-option v-if="isRoot" label="系统管理员" value="0" />
-                        <el-option v-for="(item, index) in optionsData.role" :key="index" :label="item.roleName"
-                            :value="item.id" />
-                    </el-select>
-                </el-form-item>
-
-                <el-form-item label="密码" prop="password">
-                    <el-input v-model.trim="formData.password" show-password clearable placeholder="请输入密码" />
-                </el-form-item>
-
-                <el-form-item label="确认密码" prop="passwordConfirm">
-                    <el-input v-model.trim="formData.passwordConfirm" show-password clearable placeholder="请输入确认密码" />
-                </el-form-item>
-
-                <el-form-item label="管理员状态" v-if="!isRoot">
-                    <el-switch v-model="formData.isDisable" :active-value="0" :inactive-value="1" />
-                </el-form-item>
-
-                <el-form-item label="多处登录">
-                    <div>
-                        <el-switch v-model="formData.isMultipoint" :active-value="1" :inactive-value="0" />
-                        <div class="form-tips">允许多人同时在线登录</div>
-                    </div>
                 </el-form-item>
             </el-form>
         </Popup>
@@ -89,14 +38,7 @@ const formData = reactive({
     id: 0,
     username: '',
     nickname: '',
-    deptIds: [],
-    postIds: [],
-    roleIds: [],
     avatar: '',
-    password: '',
-    passwordConfirm: '',
-    isDisable: 0,
-    isMultipoint: 1
 })
 
 const isRoot = computed(() => {
@@ -125,32 +67,6 @@ const formRules = reactive({
             trigger: ['blur']
         }
     ],
-    roleIds: [
-        {
-            type: 'array',
-            required: true,
-            message: '请选择角色',
-            trigger: ['blur']
-        }
-    ],
-    password: [
-        {
-            required: true,
-            message: '请输入密码',
-            trigger: 'blur'
-        }
-    ],
-    passwordConfirm: [
-        {
-            required: true,
-            message: '请再次输入密码',
-            trigger: 'blur'
-        },
-        {
-            validator: passwordConfirmValidator,
-            trigger: 'blur'
-        }
-    ]
 })
 
 
