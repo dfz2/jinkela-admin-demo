@@ -29,9 +29,9 @@ public class JinkelaUser extends AuditMetadata implements UserDetails, Credentia
 
   @Transient
   private transient Set<GrantedAuthority> authorities = new HashSet<>();
-  private boolean accountNonExpired;
-  private boolean accountNonLocked;
-  private boolean credentialsNonExpired;
+  private Boolean accountNonExpired;
+  private Boolean accountNonLocked;
+  private Boolean credentialsNonExpired;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

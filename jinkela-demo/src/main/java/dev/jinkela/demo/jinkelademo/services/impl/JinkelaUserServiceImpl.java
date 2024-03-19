@@ -1,9 +1,14 @@
 package dev.jinkela.demo.jinkelademo.services.impl;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -24,8 +29,10 @@ class JinkelaUserServiceImpl implements JinkelaUserService {
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    return jinkelaUserRepository.findJinkelaUserByUsername(username)
-        .orElseThrow(() -> new UsernameNotFoundException("用户名密码错误"));
+    JinkelaUser jinkelaUser = jinkelaUserRepository.findJinkelaUserByUsername(username).orElseThrow(() -> new UsernameNotFoundException("用户名密码错误"));
+    Set<GrantedAuthority> authorities = jinkelaUserRepository.listAllPermissionsByJinkelaUserId(jinkelaUser.getId()).stream().map(t -> new SimpleGrantedAuthority(t)).collect(Collectors.toSet());
+    jinkelaUser.setAuthorities(authorities);
+    return jinkelaUser;
   }
 
   @Override
@@ -38,9 +45,7 @@ class JinkelaUserServiceImpl implements JinkelaUserService {
   public Page<JinkelaUser> listAllJikelaUsers(JinkelaUserListPageDTO request, Pageable pageable) {
     JinkelaUser probe = new JinkelaUser();
     probe.setUsername(request.getUsernmae());
-
-    final String[] ignorePaths = { "accountNonExpired", "accountNonLocked", "credentialsNonExpired", "enabled" };
-    final ExampleMatcher matching = ExampleMatcher.matching().withIgnoreNullValues().withIgnorePaths(ignorePaths).withMatcher("username", ExampleMatcher.GenericPropertyMatchers.contains());
+    final ExampleMatcher matching = ExampleMatcher.matching().withIgnoreNullValues().withMatcher("username", ExampleMatcher.GenericPropertyMatchers.contains());
     Example<JinkelaUser> example = Example.of(probe, matching);
     return jinkelaUserRepository.findAll(example, pageable);
   }
