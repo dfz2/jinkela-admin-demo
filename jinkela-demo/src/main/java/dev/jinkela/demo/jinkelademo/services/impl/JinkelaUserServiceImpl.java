@@ -12,6 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 @Transactional(readOnly = true)
 class JinkelaUserServiceImpl implements JinkelaUserService {
   private final JinkelaUserRepository jinkelaUserRepository;
+  private final PasswordEncoder passwordEncoder;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -59,6 +61,7 @@ class JinkelaUserServiceImpl implements JinkelaUserService {
   @Transactional
   @Override
   public void addNewUserToDb(JinkelaUserCreateDTO jinkelaUserCreateDTO) {
+
     JinkelaUser jinkelaUser = new JinkelaUser();
     jinkelaUser.setEnabled(true);
     jinkelaUser.setAccountNonExpired(true);
@@ -66,6 +69,7 @@ class JinkelaUserServiceImpl implements JinkelaUserService {
     jinkelaUser.setCredentialsNonExpired(true);
     jinkelaUser.setUsername(jinkelaUserCreateDTO.getUsername());
     jinkelaUser.setNickname(jinkelaUserCreateDTO.getNickname());
+    jinkelaUser.setPassword(passwordEncoder.encode("123456"));
 
     try {
       jinkelaUserRepository.save(jinkelaUser);

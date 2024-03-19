@@ -37,6 +37,7 @@ public class JinkelaUser extends AuditMetadata implements UserDetails, Credentia
   public JinkelaUser() {
   }
 
+
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return authorities;
