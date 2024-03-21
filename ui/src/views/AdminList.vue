@@ -8,13 +8,15 @@ import { Plus } from "@element-plus/icons-vue"
 import { ElMessage, ElMessageBox } from "element-plus"
 
 const editRef = shallowRef(null)
-// 表单数据
+const showEdit = ref(false)
+
 const formData = reactive({
   username: null,
   nickname: null,
   role: null
 })
-const showEdit = ref(false)
+
+
 const { pager, getLists, resetParams, resetPage } = usePaging({
   fetchFun: adminLists,
   params: formData
@@ -27,6 +29,7 @@ const changeStatus = async (active, id) => {
       cancelButtonText: '取消',
       type: 'info'
     })
+
     await adminStatus({ id })
     ElMessage.success('修改成功')
     getLists()
@@ -34,6 +37,8 @@ const changeStatus = async (active, id) => {
     getLists()
   }
 }
+
+
 const handleAdd = async () => {
   showEdit.value = true
   await nextTick()
@@ -54,17 +59,10 @@ const handleDelete = async (id) => {
     type: 'info'
   })
   await adminDelete({ id })
-  ElMessageBox.success('删除成功')
+  ElMessage.success('删除成功')
   getLists()
 }
 
-// const { optionsData } = useDictOptions<{
-//     role: any[]
-// }>({
-//     role: {
-//         api: roleAll
-//     }
-// })
 
 onMounted(() => {
   getLists()
@@ -94,11 +92,6 @@ onMounted(() => {
       <div class="mt-4">
         <el-table :data="pager.lists" size="large">
           <el-table-column label="ID" prop="id" min-width="60" />
-          <el-table-column label="头像" min-width="100">
-            <template #default="{ row }">
-              <el-avatar :size="50" :src="row.avatar"></el-avatar>
-            </template>
-          </el-table-column>
           <el-table-column label="登录账号" prop="username" min-width="100" />
           <el-table-column label="昵称" prop="nickname" min-width="100" />
           <el-table-column label="状态" prop="enabled" min-width="120" />

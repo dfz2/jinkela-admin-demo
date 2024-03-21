@@ -1,6 +1,6 @@
 <script setup>
 
-import { onBeforeMount, onMounted, reactive, ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useRoute, useRouter } from "vue-router";
 import { INDEX } from "@/router/routes";
@@ -19,25 +19,17 @@ const state = reactive({
   password: '123456',
 })
 
-onBeforeMount(async () => {
-})
 
-onMounted(async () => {
-  // const res = await getPublicKeyApi({})
-  // state.publicKey = res.publicKey
+onMounted(() => {
+
 })
 
 const handleLogin = async () => {
   await formRef.value?.validate()
   loading.value = true
-  // ElMessage({
-  //   message: "登录中...",
-  //   icon: Loading
-  // })
   try {
-    // const res = await getPublicKeyApi({})
     const res = await getPublicKeyApi()
-    jsEncrypt.setPublicKey(res.publicKey);
+    jsEncrypt.setPublicKey(res.publicKey)
     await loginApi({ username: state.username, password: jsEncrypt.encrypt(state.password) })
     ElMessage({
       message: "登录成功",

@@ -5,14 +5,13 @@ import { INDEX_ROUTE, INDEX_ROUTE_NAME, INDEX } from './router/routes'
 // NProgress配置
 // NProgress.configure({ showSpinner: false })
 
-
 // 免登录白名单
 const whiteList = ['/login', '/forbidden']
 
 router.beforeEach(async (to, _from, next) => {
   // 开始 Progress Bar
   // NProgress.start()
-  // document.title = to.meta.title
+  document.title = to.meta.title
 
   // const tabsStore = useTabsStore()
   if (whiteList.includes(to.path)) {

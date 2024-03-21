@@ -14,19 +14,17 @@
         </Popup>
     </div>
 </template>
+
+
+
 <script setup>
 import Popup from '@/components/Popup.vue'
 import { adminAdd, adminEdit, adminDetail } from '@/api/admin'
-import { useDictOptions } from '@/hooks/useDictOptions'
-// import { roleAll } from '@/api/role'
-// import { postAll } from '@/api/post'
-// import { deptLists } from '@/api/department'
 import { shallowRef, computed, ref, reactive, defineExpose } from 'vue'
-
-// import feedback from '@/utils/feedback'
-
+import { ElMessage  } from 'element-plus';
 
 const emit = defineEmits(['success', 'close'])
+
 const formRef = shallowRef(null)
 const popupRef = shallowRef(null)
 const mode = ref('add')
@@ -69,24 +67,12 @@ const formRules = reactive({
     ],
 })
 
-
-// const { optionsData } = useDictOptions({
-//     role: {
-//         api: roleAll,
-//     },
-//     // post: {
-//     //     api: postAll
-//     // },
-//     // dept: {
-//     //     api: deptLists
-//     // }
-// })
-
 const handleSubmit = async () => {
     await formRef.value?.validate()
     mode.value == 'edit' ? await adminEdit(formData) : await adminAdd(formData)
     popupRef.value?.close()
-    feedback.msgSuccess('操作成功')
+
+    ElMessage.success('操作成功')
     emit('success')
 }
 
