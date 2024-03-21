@@ -6,24 +6,18 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { computed, defineProps } from 'vue';
 
-interface Props {
-  modelValue?: Record<string, any>
-  pageSizes?: number[]
-  layout?: string
-}
-const props = withDefaults(defineProps<Props>(), {
-  modelValue: () => ({}),
-  pageSizes: () => [15, 20, 30, 40],
+
+const props = defineProps({
+  modelValue: {},
+  pageSizes:[15, 20, 30, 40],
   layout: 'total, sizes, prev, pager, next, jumper'
 })
 
-const emit = defineEmits<{
-  (event: 'change'): void
-  (event: 'update:modelValue', value: any): void
-}>()
+
+const emit = defineEmits(["change", "update:modelValue"])
 
 const pager = computed({
   get() {

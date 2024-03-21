@@ -2,17 +2,17 @@ import { isFunction } from 'lodash'
 import { reactive, toRaw } from 'vue'
 
 // 分页钩子函数
-interface Options {
-    page?: number
-    size?: number
-    fetchFun: (_arg: any) => Promise<any>
-    params?: Record<any, any>
-    firstLoading?: boolean
-    beforeRequest?(params: Record<any, any>): Record<any, any>
-    afterRequest?(res: Record<any, any>): void
-}
+// interface Options {
+//     page?: number
+//     size?: number
+//     fetchFun: (_arg: any) => Promise<any>
+//     params?: Record<any, any>
+//     firstLoading?: boolean
+//     beforeRequest?(params: Record<any, any>): Record<any, any>
+//     afterRequest?(res: Record<any, any>): void
+// }
 
-export function usePaging(options: Options) {
+export function usePaging(options) {
     const {
         page = 1,
         size = 15,
@@ -23,15 +23,15 @@ export function usePaging(options: Options) {
         afterRequest
     } = options
     // 记录分页初始参数
-    const paramsInit: Record<any, any> = Object.assign({}, toRaw(params))
+    const paramsInit = Object.assign({}, toRaw(params))
     // 分页数据
     const pager = reactive({
         page,
         size,
         loading: firstLoading,
         count: 0,
-        lists: [] as any[],
-        extend: {} as Record<any, any>
+        lists: [],
+        extend: {}
     })
     // 请求分页接口
     const getLists = () => {
@@ -45,7 +45,7 @@ export function usePaging(options: Options) {
             size: pager.size,
             ...requestParams
         })
-            .then((res: any) => {
+            .then((res) => {
                 pager.count = res?.totalElements
                 pager.lists = res?.content
                 pager.extend = res?.extend
@@ -54,7 +54,7 @@ export function usePaging(options: Options) {
                 }
                 return Promise.resolve(res)
             })
-            .catch((err: any) => {
+            .catch((err) => {
                 return Promise.reject(err)
             })
             .finally(() => {

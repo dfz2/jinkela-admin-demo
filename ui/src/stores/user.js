@@ -24,7 +24,7 @@ export const useUserStore = defineStore('userStore', {
           })
       })
     },
-    getRoutes(jinkelaUserId: string) {
+    getRoutes(jinkelaUserId) {
       return new Promise((resolve, reject) => {
         getMenusApi(jinkelaUserId)
           .then((data) => {

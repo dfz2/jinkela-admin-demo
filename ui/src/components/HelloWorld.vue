@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { ref, defineProps } from 'vue'
 
 defineProps<{ msg: string }>()

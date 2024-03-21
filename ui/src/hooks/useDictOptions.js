@@ -1,13 +1,13 @@
 import { dictDataAll } from '@/api/dict'
 import { reactive, toRaw } from 'vue'
 
-interface Options {
-    [propName: string]: {
-        api: PromiseFun
-        params?: Record<string, any>
-        transformData?(data: any): any
-    }
-}
+// interface Options {
+//     [propName: string]: {
+//         api: PromiseFun
+//         params?: Record<string, any>
+//         transformData?(data: any): any
+//     }
+// }
 
 // {
 //     dict: {
@@ -19,8 +19,8 @@ interface Options {
 //     }
 // }
 
-export function useDictOptions<T = any>(options: Options) {
-    const optionsData: any = reactive({})
+export function useDictOptions(options) {
+    const optionsData = reactive({})
     const optionsKey = Object.keys(options)
     const apiLists = optionsKey.map((key) => {
         const value = options[key]
@@ -29,7 +29,7 @@ export function useDictOptions<T = any>(options: Options) {
     })
 
     const refresh = async () => {
-        const res = await Promise.allSettled<Promise<any>>(apiLists.map((api) => api()))
+        const res = await Promise.allSettled(apiLists.map((api) => api()))
         res.forEach((item, index) => {
             const key = optionsKey[index]
             if (item.status == 'fulfilled') {
@@ -41,7 +41,7 @@ export function useDictOptions<T = any>(options: Options) {
     }
     refresh()
     return {
-        optionsData: optionsData as T,
+        optionsData: optionsData,
         refresh
     }
 }
@@ -52,8 +52,8 @@ export function useDictOptions<T = any>(options: Options) {
 //     dict: dictData
 // })
 
-export function useDictData<T = any>(dict: string[]) {
-    const options: Options = {}
+export function useDictData(dict) {
+    const options = {}
     for (const type of dict) {
         options[type] = {
             api: dictDataAll,
@@ -62,7 +62,7 @@ export function useDictData<T = any>(dict: string[]) {
             }
         }
     }
-    const { optionsData } = useDictOptions<T>(options)
+    const { optionsData } = useDictOptions(options)
     return {
         dictData: optionsData
     }

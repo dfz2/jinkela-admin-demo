@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup>
 import { computed, defineProps, } from 'vue';
 import { isExternal } from '@/router';
 

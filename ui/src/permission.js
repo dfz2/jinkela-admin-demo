@@ -2,7 +2,6 @@
 import router, { findFirstValidRoute } from '@/router'
 import { useUserStore } from '@/stores/user'
 import { INDEX_ROUTE, INDEX_ROUTE_NAME, INDEX } from './router/routes'
-import { type RouteRecordRaw } from 'vue-router'
 // NProgress配置
 // NProgress.configure({ showSpinner: false })
 
@@ -50,7 +49,7 @@ router.beforeEach(async (to, _from, next) => {
         // 动态添加index路由
         router.addRoute(INDEX_ROUTE)
 
-        routes.forEach((route: RouteRecordRaw) => {
+        routes.forEach((route) => {
           // https 则不插入
           // if (isExternal(route.path)) {
           //     return

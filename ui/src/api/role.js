@@ -1,4 +1,4 @@
-import service from "@/api/service.ts";
+import service from "@/api/service";
 
 // 角色列表
 export function roleLists(params) {

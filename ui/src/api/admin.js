@@ -1,4 +1,4 @@
-import service from "@/api/service.ts";
+import service from "@/api/service";
 
 
 // 管理员列表

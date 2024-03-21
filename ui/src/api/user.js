@@ -1,6 +1,6 @@
-import service from "@/api/service.ts";
+import service from "@/api/service";
 
-export const loginApi = (params: API.LoginDTO) => {
+export const loginApi = (params) => {
     const formData = new FormData()
     formData.append("username", params.username)
     formData.append("password", params.password)
@@ -38,7 +38,7 @@ export const getPublicKeyApi = () => {
 }
 
 
-export const getMenusApi = (jinkelaUserId: string) => {
+export const getMenusApi = (jinkelaUserId) => {
     return service({
         url: `/api/jinkela/s/${jinkelaUserId}/menus`,
         method: 'GET',

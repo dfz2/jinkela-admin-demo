@@ -1,12 +1,11 @@
 import Layout from '@/components/Layout.vue'
-import { type RouteRecordRaw } from 'vue-router'
 
 export const LAYOUT = () => Promise.resolve(Layout)
 export const INDEX_ROUTE_NAME = Symbol()
 export const INDEX = '/'
 
 
-export const routes: RouteRecordRaw[] = [
+export const routes = [
   {
     path: '/:pathMatch(.*)*',
     component: () => import('@/views/Notfound.vue')
@@ -34,7 +33,7 @@ export const routes: RouteRecordRaw[] = [
   },
 ]
 
-export const INDEX_ROUTE: RouteRecordRaw = {
+export const INDEX_ROUTE = {
   path: INDEX,
   component: LAYOUT,
   name: INDEX_ROUTE_NAME

@@ -1,4 +1,4 @@
-import service from "@/api/service.ts";
+import service from "@/api/service";
 
 // 菜单列表
 export function menuLists(params) {

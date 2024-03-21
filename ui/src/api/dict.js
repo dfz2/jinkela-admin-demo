@@ -1,4 +1,4 @@
-import service from "@/api/service.ts";
+import service from "@/api/service";
 
 // 字典类型列表
 export function dictTypeLists(params) {

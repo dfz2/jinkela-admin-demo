@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { useUserStore } from '@/stores/user';
 import { MoreFilled, SwitchButton, User, UserFilled } from '@element-plus/icons-vue'
 import { computed } from 'vue';
@@ -9,7 +9,7 @@ import { ElMessageBox } from "element-plus";
 
 const userStore = useUserStore()
 const userInfo = computed(() => userStore.userInfo)
-const handleCommand = async (command: string) => {
+const handleCommand = async (command) => {
 
 
   if (command == 'logout') {

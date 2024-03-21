@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 
 import { onBeforeMount, onMounted, reactive, ref } from 'vue'
 import { ElMessage } from 'element-plus'
@@ -14,7 +14,7 @@ const router = useRouter()
 const route = useRoute()
 const loading = ref<boolean>(false)
 
-const state = reactive<API.LoginDTO>({
+const state = reactive({
   username: 'admin',
   password: '123456',
 })

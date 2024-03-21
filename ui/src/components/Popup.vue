@@ -26,7 +26,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script >
 import { defineComponent, nextTick, provide, ref } from 'vue'
 
 export default defineComponent({
@@ -85,7 +85,7 @@ export default defineComponent({
     setup(props, { emit }) {
         const visible = ref(false)
 
-        const handleEvent = (type: 'confirm' | 'cancel') => {
+        const handleEvent = (type) => {
             emit(type)
             if (!props.async || type === 'cancel') {
                 close()
