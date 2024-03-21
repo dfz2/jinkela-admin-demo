@@ -3,7 +3,7 @@
 import { onBeforeMount, onMounted, reactive, ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useRoute, useRouter } from "vue-router";
-import { INDEX } from "@/router/routes.js";
+import { INDEX } from "@/router/routes";
 import { getPublicKeyApi, loginApi } from "@/api/user";
 import JSEncrypt from 'jsencrypt/bin/jsencrypt';
 import { useUrlSearchParams } from '@vueuse/core'

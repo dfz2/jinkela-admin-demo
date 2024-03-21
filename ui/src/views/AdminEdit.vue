@@ -18,9 +18,9 @@
 import Popup from '@/components/Popup.vue'
 import { adminAdd, adminEdit, adminDetail } from '@/api/admin'
 import { useDictOptions } from '@/hooks/useDictOptions'
-import { roleAll } from '@/api/role'
-import { postAll } from '@/api/post'
-import { deptLists } from '@/api/department'
+// import { roleAll } from '@/api/role'
+// import { postAll } from '@/api/post'
+// import { deptLists } from '@/api/department'
 import { shallowRef, computed, ref, reactive, defineExpose } from 'vue'
 
 // import feedback from '@/utils/feedback'
@@ -70,17 +70,17 @@ const formRules = reactive({
 })
 
 
-const { optionsData } = useDictOptions({
-    role: {
-        api: roleAll,
-    },
-    // post: {
-    //     api: postAll
-    // },
-    // dept: {
-    //     api: deptLists
-    // }
-})
+// const { optionsData } = useDictOptions({
+//     role: {
+//         api: roleAll,
+//     },
+//     // post: {
+//     //     api: postAll
+//     // },
+//     // dept: {
+//     //     api: deptLists
+//     // }
+// })
 
 const handleSubmit = async () => {
     await formRef.value?.validate()

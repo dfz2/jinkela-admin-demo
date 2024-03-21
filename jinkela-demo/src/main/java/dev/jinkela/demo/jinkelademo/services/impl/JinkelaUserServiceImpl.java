@@ -31,6 +31,7 @@ import lombok.RequiredArgsConstructor;
 class JinkelaUserServiceImpl implements JinkelaUserService {
   private final JinkelaUserRepository jinkelaUserRepository;
   private final PasswordEncoder passwordEncoder;
+  
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
