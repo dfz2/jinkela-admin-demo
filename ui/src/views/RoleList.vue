@@ -3,16 +3,17 @@ import { roleLists, roleDelete } from '@/api/role'
 import { usePaging } from '@/hooks/usePaging'
 import Pagination from '@/components/Pagination.vue'
 import RoleEdit from './RoleEdit.vue'
-// import AuthPopup from './auth.vue'
 import { Plus } from "@element-plus/icons-vue";
 import { shallowRef, ref, nextTick } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus';
+import { useRoute, useRouter } from "vue-router";
 
 
 const editRef = shallowRef()
 const authRef = shallowRef()
 const showEdit = ref(false)
 const showAuth = ref(false)
+const router = useRouter()
 
 const { pager, getLists } = usePaging({
   fetchFun: roleLists
@@ -31,11 +32,13 @@ const handleEdit = async (data) => {
   editRef.value?.setFormData(data)
 }
 
-const handleAuth = async (data) => {
-  showAuth.value = true
-  await nextTick()
-  authRef.value?.open()
-  authRef.value?.setFormData(data)
+const handleAuth = () => {
+  // showAuth.value = true
+  // await nextTick()
+  // authRef.value?.open()
+  // authRef.value?.setFormData(data)
+  console.log(router.getRoutes())
+  router.push("/permission/role/authorize")
 }
 
 // 删除角色
@@ -76,7 +79,7 @@ getLists()
                 <el-button v-perms="['system:role:edit']" link type="primary" @click="handleEdit(row)">
                   编辑
                 </el-button>
-                <el-button v-perms="['system:role:edit']" link type="primary" @click="handleAuth(row)">
+                <el-button  link type="primary" @click="handleAuth()">
                   权限设置
                 </el-button>
                 <el-button v-perms="['system:role:del']" link type="danger" @click="handleDelete(row)">
@@ -95,3 +98,4 @@ getLists()
     <!-- <auth-popup v-if="showAuth" ref="authRef" @success="getLists" @close="showAuth = false" /> -->
   </div>
 </template>
+@/composables/usePaging

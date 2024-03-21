@@ -11,7 +11,7 @@ const whiteList = ['/login', '/forbidden']
 router.beforeEach(async (to, _from, next) => {
   // 开始 Progress Bar
   // NProgress.start()
-  document.title = to.meta.title
+  // document.title = to.meta.title
 
   // const tabsStore = useTabsStore()
   if (whiteList.includes(to.path)) {
@@ -44,7 +44,6 @@ router.beforeEach(async (to, _from, next) => {
 
         // tabsStore.setRouteName(routeName!)
         INDEX_ROUTE.redirect = { name: routeName }
-
         // 动态添加index路由
         router.addRoute(INDEX_ROUTE)
 

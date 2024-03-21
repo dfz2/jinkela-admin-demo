@@ -20,10 +20,6 @@ const state = reactive({
 })
 
 
-onMounted(() => {
-
-})
-
 const handleLogin = async () => {
   await formRef.value?.validate()
   loading.value = true

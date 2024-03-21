@@ -57,7 +57,7 @@ class JinkelaSecurityConfiguration {
     }
 
     @Bean
-    DaoAuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder, final UserDetailsService userDetailsService) {
+    DaoAuthenticationProvider authenticationProvider(final PasswordEncoder passwordEncoder, final UserDetailsService userDetailsService) {
         CustomAuthenticationProvider provider = new CustomAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder);
@@ -83,21 +83,15 @@ class JinkelaSecurityConfiguration {
                     System.out.println("successHandler");
                 })
                 .failureHandler((request,response,exception)-> {
-                    String message = exception.getMessage();
-                    String requestURI = request.getRequestURI();
                     response.setHeader("X-Login-error", "true");
                     response.setStatus(401);
                     response.setCharacterEncoding("utf-8");
                 }));
 
         http.exceptionHandling(exception -> exception.accessDeniedHandler((request,response,accessDeniedException)-> {
-            String message = accessDeniedException.getMessage();
-            String requestURI = request.getRequestURI();
             response.setStatus(403);
             response.setCharacterEncoding("utf-8");
         }).authenticationEntryPoint((request,response,authException)-> {
-            String message = authException.getMessage();
-            String requestURI = request.getRequestURI();
             response.setStatus(401);
             response.setCharacterEncoding("utf-8");
         }));
@@ -106,8 +100,6 @@ class JinkelaSecurityConfiguration {
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutSuccessHandler((request,response,authentication)-> {
-//                    response.setStatus(200);
-//                    response.setCharacterEncoding("utf-8");
                     System.out.println("logoutSuccessHandler");
                 })
         );
@@ -154,11 +146,8 @@ class JinkelaSecurityConfiguration {
     static class CsrfCookieFilter extends OncePerRequestFilter {
 
         @Override
-        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-                FilterChain filterChain)
-                throws ServletException, IOException {
+        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
             CsrfToken csrfToken = (CsrfToken) request.getAttribute("_csrf");
-            // Render the token value to a cookie by causing the deferred token to be loaded
             csrfToken.getToken();
             filterChain.doFilter(request, response);
         }

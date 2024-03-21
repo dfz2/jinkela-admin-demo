@@ -67,6 +67,9 @@ export function loadRouteView(component) {
       return key.includes(`${component}.vue`)
     })
     if (key) {
+      console.log(key)
+      console.log(modules)
+      console.log(modules[key])
       return modules[key]
     }
     throw Error(`找不到组件${component}，请确保组件路径正确`)

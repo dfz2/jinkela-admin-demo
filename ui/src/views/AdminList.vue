@@ -119,3 +119,4 @@ onMounted(() => {
     <AdminEdit v-if="showEdit" ref="editRef" @success="getLists" @close="showEdit = false" />
   </div>
 </template>
+@/composables/usePaging

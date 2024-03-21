@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "types": ["vue/macros", "element-plus/global"],
+    "types": ["element-plus/global", ],
+    "isolatedModules": true,
     "baseUrl": ".",
     "paths": {
       "@/*": [
@@ -12,6 +13,7 @@
     "dist"
   ],
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "src/**/*.vue",
   ]
 }
