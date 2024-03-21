@@ -12,7 +12,7 @@ const jsEncrypt = new JSEncrypt();
 const formRef = ref(null)
 const router = useRouter()
 const route = useRoute()
-const loading = ref<boolean>(false)
+const loading = ref(false)
 
 const state = reactive({
   username: 'admin',
