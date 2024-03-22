@@ -38,7 +38,7 @@ const handleAuth = () => {
   // authRef.value?.open()
   // authRef.value?.setFormData(data)
   console.log(router.getRoutes())
-  router.push("/permission/role/authorize")
+  router.push({name: "RoleAuthorize", params: {id: 1}})
 }
 
 // 删除角色

@@ -34,7 +34,7 @@ export function createRouteRecord(menu, firstRoute) {
   //@ts-ignore
   const routeRecord = {
     path: isExternal(menu.path) ? menu.path : firstRoute ? `/${menu.path}` : menu.path,
-    name: Symbol(menu.path),
+    name: menu.component,
     meta: {
       hidden: menu.hidden,
       keepAlive: menu.keepAlive,

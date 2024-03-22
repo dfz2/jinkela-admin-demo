@@ -34,23 +34,26 @@ const getNormalPath = (path) => {
 
 
 <template>
-  <router-link v-if="!hasShowChild" :to="`${routePath}`">
-    <el-menu-item :index="routePath">
-      <el-icon>
-        <component :is="route.meta.icon" />
-      </el-icon>
-      <template #title>{{ route.meta.title }}</template>
-    </el-menu-item>
-  </router-link>
-  <el-sub-menu v-else :index="routePath">
-    <template #title>
-      <el-icon>
-        <component :is="route.meta.icon" />
-      </el-icon>
-      <span>{{ route.meta?.title }}</span>
-    </template>
-    <MenuItem :path="resolvePath(children.path)" :key="resolvePath(children.path)" :route="children"
-      v-for="children in route.children">
-    </MenuItem>
-  </el-sub-menu>
+  <template v-if="!route.meta?.hidden">
+    <router-link v-if="!hasShowChild" :to="`${routePath}`">
+      <el-menu-item :index="routePath">
+        <el-icon>
+          <component :is="route.meta.icon" />
+        </el-icon>
+        <template #title>{{ route.meta.title }}</template>
+      </el-menu-item>
+    </router-link>
+    <el-sub-menu v-else :index="routePath">
+      <template #title>
+        <el-icon>
+          <component :is="route.meta.icon" />
+        </el-icon>
+        <span>{{ route.meta?.title }}</span>
+      </template>
+      <MenuItem :path="resolvePath(children.path)" :key="resolvePath(children.path)" :route="children"
+        v-for="children in route.children">
+      </MenuItem>
+    </el-sub-menu>
+  </template>
+
 </template>
