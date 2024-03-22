@@ -62,4 +62,7 @@ import AppMain from './Main.vue';
   background: var(--el-color-primary-light-9);
   border-right: 2px solid var(--el-color-primary);
 }
+
+
+
 </style>

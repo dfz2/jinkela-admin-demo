@@ -34,10 +34,18 @@ public class JinkelaUser extends AuditMetadata implements UserDetails, Credentia
   @Transient
   private transient Set<GrantedAuthority> authorities = new HashSet<>();
 
-
   public JinkelaUser() {
   }
 
+  public JinkelaUser(String nickname, String username, String password) {
+    this.nickname = nickname;
+    this.username = username;
+    this.password = password;
+    this.enabled = true;
+    this.accountNonExpired = true;
+    this.accountNonLocked = true;
+    this.credentialsNonExpired = true;
+  }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
