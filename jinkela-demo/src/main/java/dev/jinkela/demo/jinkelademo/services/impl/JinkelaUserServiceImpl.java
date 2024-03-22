@@ -1,6 +1,8 @@
 package dev.jinkela.demo.jinkelademo.services.impl;
 
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import org.springframework.dao.DuplicateKeyException;
@@ -8,6 +10,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.relational.core.conversion.DbActionExecutionException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,14 +18,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.ErrorResponseException;
 
 import dev.jinkela.demo.jinkelademo.datas.entities.JinkelaUser;
 import dev.jinkela.demo.jinkelademo.datas.repositories.JinkelaUserRepository;
 import dev.jinkela.demo.jinkelademo.dtos.JinkelaUserCreateDTO;
 import dev.jinkela.demo.jinkelademo.dtos.JinkelaUserListPageDTO;
+import dev.jinkela.demo.jinkelademo.exceptions.DataConflictException;
 import dev.jinkela.demo.jinkelademo.exceptions.UserNotFoundException;
 import dev.jinkela.demo.jinkelademo.exceptions.UsernameConflictException;
 import dev.jinkela.demo.jinkelademo.services.JinkelaUserService;
+import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -31,7 +37,6 @@ import lombok.RequiredArgsConstructor;
 class JinkelaUserServiceImpl implements JinkelaUserService {
   private final JinkelaUserRepository jinkelaUserRepository;
   private final PasswordEncoder passwordEncoder;
-  
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -62,7 +67,7 @@ class JinkelaUserServiceImpl implements JinkelaUserService {
   @Transactional
   @Override
   public void addNewUserToDb(JinkelaUserCreateDTO jinkelaUserCreateDTO) {
-
+    
     JinkelaUser jinkelaUser = new JinkelaUser();
     jinkelaUser.setEnabled(true);
     jinkelaUser.setAccountNonExpired(true);
@@ -73,11 +78,13 @@ class JinkelaUserServiceImpl implements JinkelaUserService {
     jinkelaUser.setPassword(passwordEncoder.encode("123456"));
 
     try {
-      jinkelaUserRepository.save(jinkelaUser);
+      jinkelaUserRepository.saveOrUpdate(jinkelaUser);
     } catch (DuplicateKeyException e) {
-      throw new UsernameConflictException();
+      throw new DataConflictException("账号已存在");
     }
+    
 
   }
+
 
 }

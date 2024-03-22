@@ -20,7 +20,7 @@
 <script setup>
 import Popup from '@/components/Popup.vue'
 import { adminAdd, adminEdit, adminDetail } from '@/api/admin'
-import { shallowRef, computed, ref, reactive, defineExpose } from 'vue'
+import { shallowRef, computed, ref, reactive } from 'vue'
 import { ElMessage  } from 'element-plus';
 
 const emit = defineEmits(['success', 'close'])
