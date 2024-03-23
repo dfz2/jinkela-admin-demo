@@ -22,7 +22,6 @@ class JinkelaMenuServiceImpl implements JinkelaMenuService {
     return buildMenuTree(() -> jinkelaMenuRepository.listAllMenusByJinkelaUserId(jinkelaUserId));
   }
 
-
   @Override
   public List<JinkelaMenu> listAllMenus() {
     return buildMenuTree(() -> jinkelaMenuRepository.findAll());

@@ -15,7 +15,7 @@ const route = useRoute()
 const loading = ref(false)
 
 const state = reactive({
-  username: 'admin',
+  username: 'superadmin',
   password: '123456',
 })
 

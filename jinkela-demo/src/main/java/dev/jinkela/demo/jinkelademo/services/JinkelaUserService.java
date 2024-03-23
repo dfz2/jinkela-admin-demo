@@ -16,4 +16,8 @@ public interface JinkelaUserService extends UserDetailsService{
 
   void addNewUserToDb(@Valid JinkelaUserCreateDTO jinkelaUserCreateDTO);
 
+  JinkelaUser loadByJinkelaUserId(Long jinkelaUserId);
+
+  void modifyUserToDb(Long jinkelaUserId, @Valid JinkelaUserCreateDTO jinkelaUserCreateDTO);
+
 }

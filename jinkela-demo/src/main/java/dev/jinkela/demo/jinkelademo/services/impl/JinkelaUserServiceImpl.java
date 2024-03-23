@@ -23,6 +23,7 @@ import dev.jinkela.demo.jinkelademo.dtos.JinkelaUserListPageDTO;
 import dev.jinkela.demo.jinkelademo.exceptions.DataConflictException;
 import dev.jinkela.demo.jinkelademo.exceptions.UserNotFoundException;
 import dev.jinkela.demo.jinkelademo.services.JinkelaUserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -47,7 +48,11 @@ class JinkelaUserServiceImpl implements JinkelaUserService {
     return jinkelaUserRepository.findJinkelaUserByUsername(username).orElseThrow(UserNotFoundException::new);
   }
 
-  @SuppressWarnings("null")
+  @Override
+  public JinkelaUser loadByJinkelaUserId(Long jinkelaUserId) {
+    return jinkelaUserRepository.findById(jinkelaUserId).orElseThrow(UserNotFoundException::new);
+  }
+
   @Override
   public Page<JinkelaUser> listAllJikelaUsers(JinkelaUserListPageDTO request, Pageable pageable) {
     JinkelaUser probe = new JinkelaUser();
@@ -68,7 +73,19 @@ class JinkelaUserServiceImpl implements JinkelaUserService {
     } catch (DuplicateKeyException e) {
       throw new DataConflictException("账号已存在");
     }
+  }
 
+  @Transactional
+  @Override
+  public void modifyUserToDb(Long jinkelaUserId, JinkelaUserCreateDTO jinkelaUserCreateDTO) {
+    var jinkelaUser = jinkelaUserRepository.findById(jinkelaUserId).orElseThrow(UserNotFoundException::new);
+    jinkelaUser.setNickname(jinkelaUserCreateDTO.getNickname());
+
+    try {
+      jinkelaUserRepository.saveOrUpdate(jinkelaUser);
+    } catch (DuplicateKeyException e) {
+      throw new DataConflictException("账号已存在");
+    }
   }
 
 }

@@ -15,7 +15,6 @@ import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleListPageDTO;
 import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleModifyDTO;
 import dev.jinkela.demo.jinkelademo.exceptions.RoleNotFoundException;
 import dev.jinkela.demo.jinkelademo.services.JinkelaRoleService;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -47,6 +46,7 @@ class JinkelaRoleServiceImpl implements JinkelaRoleService {
     saveJinkelaRoleToDb.setName(jinkelaRoleCreateDTO.getName());
     saveJinkelaRoleToDb.setRemark(jinkelaRoleCreateDTO.getRemark());
     saveJinkelaRoleToDb.setEnabled(true);
+    saveJinkelaRoleToDb.setDeleted(false);
     jinkelaRoleRepository.save(saveJinkelaRoleToDb);
   }
 
@@ -62,7 +62,7 @@ class JinkelaRoleServiceImpl implements JinkelaRoleService {
 
   @Transactional
   @Override
-  public void deleteRoleFromDb(@NotNull Long jinkelaRoleId, JinkelaRoleDeleteDTO jinkelaRoleDeleteDTO) {
+  public void deleteRoleFromDb(Long jinkelaRoleId, JinkelaRoleDeleteDTO jinkelaRoleDeleteDTO) {
     JinkelaRole jinkelaRoleFromDb = jinkelaRoleRepository.findById(jinkelaRoleId).orElseThrow(RoleNotFoundException::new);
     jinkelaRoleFromDb.setDeleted(true);
     jinkelaRoleFromDb.setVersion(jinkelaRoleDeleteDTO.getVersion());

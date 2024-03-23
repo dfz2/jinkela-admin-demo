@@ -6,9 +6,8 @@
                 <el-form-item label="账号" prop="username">
                     <el-input v-model="formData.username" :disabled="isRoot" placeholder="请输入账号" clearable />
                 </el-form-item>
-
-                <el-form-item label="名称" prop="nickname">
-                    <el-input v-model="formData.nickname" placeholder="请输入名称" clearable />
+                <el-form-item label="昵称" prop="nickname">
+                    <el-input v-model="formData.nickname" placeholder="请输入昵称" clearable />
                 </el-form-item>
             </el-form>
         </Popup>
@@ -21,16 +20,14 @@
 import Popup from '@/components/Popup.vue'
 import { adminAdd, adminEdit, adminDetail } from '@/api/admin'
 import { shallowRef, computed, ref, reactive } from 'vue'
-import { ElMessage  } from 'element-plus';
+import { ElMessage } from 'element-plus';
 
 const emit = defineEmits(['success', 'close'])
 
 const formRef = shallowRef(null)
 const popupRef = shallowRef(null)
 const mode = ref('add')
-const popupTitle = computed(() => {
-    return mode.value == 'edit' ? '编辑管理员' : '新增管理员'
-})
+const popupTitle = computed(() => mode.value == 'edit' ? '编辑管理员' : '新增管理员')
 
 const formData = reactive({
     id: 0,
@@ -39,17 +36,8 @@ const formData = reactive({
     avatar: '',
 })
 
-const isRoot = computed(() => {
-    return formData.id == 1
-})
+const isRoot = computed(() => formData.id == 1000000 || mode.value == 'edit')
 
-const passwordConfirmValidator = (rule, value, callback) => {
-    if (formData.password) {
-        if (!value) callback(new Error('请再次输入密码'))
-        if (value !== formData.password) callback(new Error('两次输入密码不一致!'))
-    }
-    callback()
-}
 const formRules = reactive({
     username: [
         {
@@ -82,13 +70,6 @@ const open = (type = 'add') => {
 }
 
 const setFormData = async (row) => {
-    formRules.password = []
-    formRules.passwordConfirm = [
-        {
-            validator: passwordConfirmValidator,
-            trigger: 'blur'
-        }
-    ]
     const data = await adminDetail({
         id: row.id
     })
@@ -109,3 +90,11 @@ defineExpose({
     setFormData
 })
 </script>
+<style>
+.form-tips {
+    margin-top: 4px;
+    font-size: var(--el-font-size-extra-small);
+    line-height: 24px;
+    color: var(--el-text-color-secondary);
+}
+</style>

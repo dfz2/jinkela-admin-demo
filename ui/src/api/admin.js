@@ -13,12 +13,12 @@ export function adminAdd(params) {
 
 // 管理员编辑
 export function adminDetail(params) {
-    return service({ url: '/api/system/admin/detail', method: 'POST', params })
+    return service({ url: `/api/jinkela/users/${params.id}`, method: 'GET' })
 }
 
 // 管理员编辑
 export function adminEdit(params) {
-    return service({ url: '/api/system/admin/edit', method: 'POST', params })
+    return service({ url: `/api/jinkela/users/${params.id}`, method: 'PUT', data: params })
 }
 
 // 管理员删除

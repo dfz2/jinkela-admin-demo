@@ -91,14 +91,12 @@ onMounted(() => {
       </el-button>
       <div class="mt-4">
         <el-table :data="pager.lists" size="large">
-          <el-table-column label="ID" prop="id" min-width="60" />
-          <el-table-column label="登录账号" prop="username" min-width="100" />
-          <el-table-column label="昵称" prop="nickname" min-width="100" />
-          <el-table-column label="状态" prop="enabled" min-width="120" />
-          <el-table-column label="创建时间" prop="createdAt" min-width="180" />
-          <el-table-column label="最近登录时间" prop="lastLoginTime" min-width="180" />
-          <el-table-column label="最近登录IP" prop="lastLoginIp" min-width="120" />
-          <el-table-column label="操作" width="120" fixed="right">
+          <el-table-column label="ID" prop="id"  />
+          <el-table-column label="登录账号" prop="username"  />
+          <el-table-column label="昵称" prop="nickname"  />
+          <el-table-column label="状态" prop="enabled"  />
+          <el-table-column label="创建时间" prop="createdAt" min-width="120"/>
+          <el-table-column label="操作" min-width="120" fixed="right">
             <template #default="{ row }">
               <el-button v-perms="['system:admin:edit']" type="primary" link @click="handleEdit(row)">
                 编辑
@@ -119,4 +117,3 @@ onMounted(() => {
     <AdminEdit v-if="showEdit" ref="editRef" @success="getLists" @close="showEdit = false" />
   </div>
 </template>
-@/composables/usePaging

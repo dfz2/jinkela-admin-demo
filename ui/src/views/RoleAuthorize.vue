@@ -30,31 +30,23 @@
             <el-button type="primary" class="ml-2">Edit</el-button>
           </div>
         </template>
-
-        <el-form class="ls-form" ref="formRef" :rules="rules" :model="formData" label-width="60px">
-          <el-form-item prop="menus" class="mt-10 ml-20">
-            <div>
-              <el-checkbox label="展开/折叠" @change="handleExpand" />
-              <el-checkbox label="全选/不全选" @change="handleSelectAll" />
-              <el-checkbox v-model="checkStrictly" label="父子联动" />
-              <div>
-                <el-tree ref="treeRef" :data="state.menus" :props="state.treeProps" :check-strictly="!checkStrictly"
-                  node-key="id" :default-expand-all="isExpand" show-checkbox />
-              </div>
-            </div>
-          </el-form-item>
-        </el-form>
-
-
+        <div class="m-20 mt-10">
+          <div class="mt-3">
+            <el-tree ref="treeRef" node-key="id" :data="state.menus" :props="state.treeProps" :default-expand-all="true"
+              show-checkbox />
+          </div>
+        </div>
       </el-page-header>
     </div>
   </el-card>
 </template>
 
 <script setup>
-import { reactive } from 'vue'
-import { ElNotification as notify } from 'element-plus'
-import { menuDelete, menuLists } from '@/api/menu'
+import { menuLists } from '@/api/menu';
+import { reactive } from 'vue';
+import { useRouter } from "vue-router";
+
+const router = useRouter()
 
 const state = reactive({
   treeProps: {
@@ -70,7 +62,7 @@ const getLists = async () => {
 }
 
 const onBack = () => {
-  notify('Back')
+  router.back()
 }
 
 getLists()
