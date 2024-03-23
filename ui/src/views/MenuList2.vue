@@ -23,7 +23,7 @@
         <el-input v-model="filterText" placeholder="输入菜单名称搜索" :suffix-icon="Search" />
         <div class="mt-4">
           <el-tree ref="treeRef" :data="menus" :filter-node-method="filterNode" show-checkbox node-key="id"
-            style="min-width: 300px" :props="defaultProps" @check="handleTreeCheck" check-strictly="true" />
+            style="min-width: 320px" :props="defaultProps" @check="handleTreeCheck" :check-strictly="true" />
         </div>
       </el-card>
     </div>
@@ -33,7 +33,7 @@
             <div class="flex items-center">
               <el-icon :size="20">
                 <Edit />
-              </el-icon><span class="ml-2"> 编辑菜单</span>
+              </el-icon><span class="ml-2"> {{ titleText }}</span>
             </div>
           </div>
         </template>
@@ -75,7 +75,7 @@
               <el-input v-model="state.remark" type="textarea" />
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="onSubmit">保存</el-button>
+              <el-button type="primary" @click="onSubmit">保存菜单信息</el-button>
               <el-button>Cancel</el-button>
             </el-form-item>
           </el-form>
@@ -91,7 +91,7 @@
 <script setup>
 import { Expand, Fold, Search } from '@element-plus/icons-vue'
 import { menuLists } from '@/api/menu';
-import { reactive, ref, watch } from 'vue';
+import { reactive, ref, watch, computed } from 'vue';
 
 const defaultProps = {
   children: 'children',
@@ -100,6 +100,7 @@ const defaultProps = {
 
 const treeRef = ref()
 const filterText = ref('')
+const jinkelaMenuId = ref('')
 const menus = ref([])
 
 const state = reactive({
@@ -119,23 +120,45 @@ const state = reactive({
   remark: '',
 })
 
-
 watch(filterText, (val) => {
   treeRef.value.filter(val)
 })
+
+const titleText = computed(() => jinkelaMenuId.value != '' ? "编辑菜单" : "新建菜单")
+
 
 const filterNode = (value, data) => {
   if (!value) return true
   return data.name.includes(value)
 }
 
+const reset = () => {
+  state.id = ''
+  state.parentId = ''
+  state.name = ''
+  state.type = 'M'
+  state.icon = ''
+  state.permission = ''
+  state.hidden = false
+  state.path = ''
+  state.component = ''
+  state.arguments = ''
+  state.keepAlive = ''
+  state.enabled = ''
+  state.active = ''
+  state.remark = ''
+  jinkelaMenuId.value = ''
+}
 
 const handleTreeCheck = (data, list) => {
-  console.log(data)
-  console.log(list.checkedKeys)
   Object.assign(state, data)
-  if (list.checkedKeys.length == 2) {
+  jinkelaMenuId.value = data.id
+  const length = list.checkedKeys.length
+  if (length == 2) {
     treeRef.value.setCheckedKeys([data.id]);
+  }
+  if (length == 0) {
+    reset()
   }
 }
 
