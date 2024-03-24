@@ -96,7 +96,7 @@ class JinkelaSecurityConfiguration {
             response.setCharacterEncoding("utf-8");
         }));
 
-        http.logout(logout -> logout.deleteCookies("sneakydogid")
+        http.logout(logout -> logout.deleteCookies("jinkela_distributed_id")
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutSuccessHandler((request,response,authentication)-> {

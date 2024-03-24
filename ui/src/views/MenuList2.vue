@@ -44,7 +44,7 @@
           </div>
           <el-form :model="state" label-width="auto" style="max-width: 600px">
             <el-form-item label="类型">
-              <el-radio-group v-model="state.type">
+              <el-radio-group v-model="state.type" >
                 <el-radio-button label="目录" value="M" />
                 <el-radio-button label="菜单" value="C" />
                 <el-radio-button label="按钮" value="A" />
