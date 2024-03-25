@@ -12,9 +12,7 @@ import dev.jinkela.demo.jinkelademo.datas.entities.JinkelaMenu;
 import dev.jinkela.demo.jinkelademo.datas.entities.JinkelaUser;
 import dev.jinkela.demo.jinkelademo.services.JinkelaMenuService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RestController
 @RequestMapping("/jinkela/s")
 @RequiredArgsConstructor
