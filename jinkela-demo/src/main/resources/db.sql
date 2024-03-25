@@ -21,7 +21,7 @@ CREATE TABLE `_jinkela_menus` (
   `title` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=520 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=524 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- testadmin.`_jinkela_role_menu` definition
@@ -35,7 +35,7 @@ CREATE TABLE `_jinkela_role_menu` (
   `jinkela_menu_id` bigint DEFAULT NULL,
   `jinkela_role_id` bigint DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- testadmin.`_jinkela_roles` definition
@@ -46,10 +46,13 @@ CREATE TABLE `_jinkela_roles` (
   `created_by` varchar(255) DEFAULT NULL,
   `modified_at` datetime(6) DEFAULT NULL,
   `modified_by` varchar(255) DEFAULT NULL,
-  `enabled` bit(1) DEFAULT NULL,
+  `enabled` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
+  `version` int DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `deleted` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- testadmin.`_jinkela_user_role` definition
@@ -81,5 +84,6 @@ CREATE TABLE `_jinkela_users` (
   `password` varchar(255) DEFAULT NULL,
   `username` varchar(255) DEFAULT NULL,
   `nickname` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `_jinkela_users_UNIQUE` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=1000031 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

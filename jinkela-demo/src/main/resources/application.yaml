@@ -17,9 +17,9 @@ spring:
     white-list: "/favicon.ico,/jinkela/open/publickey"
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DEV_SERVER_DOMAIN}:4306/testadmin?useSSL=false
-    username: ${MYSQL_USER}
-    password: ${MYSQL_PASSWORD}
+    url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false
+    username: root
+    password: "123456"
 
 
 logging:
