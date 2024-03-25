@@ -104,6 +104,8 @@ class JinkelaSecurityConfiguration {
                 })
         );
 
+
+        
         // @formatter:on
         return http.build();
     }
