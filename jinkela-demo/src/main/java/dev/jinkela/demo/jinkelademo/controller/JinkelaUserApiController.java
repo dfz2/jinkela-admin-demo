@@ -43,7 +43,6 @@ public class JinkelaUserApiController {
     jinkelaUserService.addNewUserToDb(jinkelaUserCreateDTO);
   }
 
-  
   @PutMapping("/{jinkelaUserId}")
   public void modifyUserToDb(@PathVariable("jinkelaUserId") Long jinkelaUserId, @RequestBody @Valid JinkelaUserCreateDTO jinkelaUserCreateDTO) {
     jinkelaUserService.modifyUserToDb(jinkelaUserId, jinkelaUserCreateDTO);
