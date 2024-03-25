@@ -21,10 +21,6 @@ export const routes = [
       title: '登录'
     }
   },
-  // {
-  //   path: "/permission/role/authorize",
-  //   component: () => import('@/views/RoleAuthorize.vue')
-  // },
   {
     path: '/user',
     component: LAYOUT,

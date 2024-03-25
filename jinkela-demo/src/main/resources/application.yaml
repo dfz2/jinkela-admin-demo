@@ -8,6 +8,8 @@ server:
 spring:
   application:
     name: jinkela-demo
+  mvc:
+    log-request-details: true
   data:
     web:
       pageable:

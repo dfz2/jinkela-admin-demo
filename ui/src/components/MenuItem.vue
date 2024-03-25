@@ -15,7 +15,7 @@ const hasShowChild = computed(() => {
 })
 
 const resolvePath = (path) => {
-  return isExternal(path) ? path : getNormalPath(`${props.path}/${path}`)
+  return isExternal(path) ? path : getNormalPath(`${path}`)
 }
 
 const getNormalPath = (path) => {

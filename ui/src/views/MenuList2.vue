@@ -23,7 +23,7 @@
         <el-input v-model="filterText" placeholder="输入菜单名称搜索" :suffix-icon="Search" />
         <div class="mt-4">
           <el-tree ref="treeRef" :data="menus" :filter-node-method="filterNode" show-checkbox node-key="id"
-            style="min-width: 320px" :props="defaultProps" @check="handleTreeCheck" :check-strictly="true" />
+            style="min-width: 300px" :props="defaultProps" @check="handleTreeCheck" :check-strictly="true" />
         </div>
       </el-card>
     </div>
@@ -44,43 +44,47 @@
           </div>
           <el-form :model="state" label-width="auto" style="max-width: 600px">
             <el-form-item label="类型">
-              <el-radio-group v-model="state.type" >
+              <el-radio-group v-model="state.type">
                 <el-radio-button label="目录" value="M" />
                 <el-radio-button label="菜单" value="C" />
                 <el-radio-button label="按钮" value="A" />
               </el-radio-group>
             </el-form-item>
+            <el-form-item label="父级菜单">
+              <el-input v-model="state.name" />
+            </el-form-item>
             <el-form-item label="标题">
               <el-input v-model="state.name" />
             </el-form-item>
-            <el-form-item label="组件">
-              <el-input v-model="state.component" />
-            </el-form-item>
-            <el-form-item label="路径">
+            <el-form-item label="路径" v-if="state.type === 'C'">
               <el-input v-model="state.path" />
             </el-form-item>
-            <el-form-item label="选中菜单">
+            <el-form-item label="组件" v-if="state.type === 'C'">
+              <el-select v-model="state.component" filterable placeholder="组件">
+                <el-option v-for="item in components" :key="item.value" :label="item" :value="item" />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="选中菜单" v-if="state.type === 'C'">
               <el-input v-model="state.active" />
             </el-form-item>
-            <el-form-item label="菜单权限">
+            <el-form-item label="权限字符串" v-if="state.type !== 'M'">
               <el-input v-model="state.permission" />
             </el-form-item>
-            <el-form-item label="隐藏菜单">
+            <el-form-item label="隐藏菜单" v-if="state.type !== 'A'">
               <el-switch v-model="state.hidden" inline-prompt active-text="隐藏" inactive-text="显示" />
             </el-form-item>
-            <el-form-item label="是否缓存">
+            <el-form-item label="是否缓存" v-if="state.type !== 'A'">
               <el-switch v-model="state.keepAlive" inline-prompt active-text="是" inactive-text="否" />
             </el-form-item>
             <el-form-item label="备注">
               <el-input v-model="state.remark" type="textarea" />
             </el-form-item>
-            <el-form-item>
+            <el-form-item label=" ">
               <el-button type="primary" @click="onSubmit">保存菜单信息</el-button>
               <el-button>Cancel</el-button>
             </el-form-item>
           </el-form>
         </div>
-
       </el-card>
     </div>
   </div>
@@ -92,6 +96,7 @@
 import { Expand, Fold, Search } from '@element-plus/icons-vue'
 import { menuLists } from '@/api/menu';
 import { reactive, ref, watch, computed } from 'vue';
+import { getModulesKey } from '@/router';
 
 const defaultProps = {
   children: 'children',
@@ -99,9 +104,12 @@ const defaultProps = {
 }
 
 const treeRef = ref()
+const currentNode = ref()
 const filterText = ref('')
 const jinkelaMenuId = ref('')
 const menus = ref([])
+const components = ref([])
+
 
 const state = reactive({
   id: '',
@@ -126,6 +134,10 @@ watch(filterText, (val) => {
 
 const titleText = computed(() => jinkelaMenuId.value != '' ? "编辑菜单" : "新建菜单")
 
+
+const getLocalModulesKey = () => {
+  components.value = getModulesKey()
+}
 
 const filterNode = (value, data) => {
   if (!value) return true
@@ -157,9 +169,11 @@ const handleTreeCheck = (data, list) => {
   if (length == 2) {
     treeRef.value.setCheckedKeys([data.id]);
   }
+
   if (length == 0) {
     reset()
   }
+
 }
 
 const onSubmit = () => {
@@ -175,6 +189,7 @@ const getMenuLists = async () => {
 }
 
 getMenuLists()
+getLocalModulesKey()
 </script>
 
 <style lang="scss" scoped>
