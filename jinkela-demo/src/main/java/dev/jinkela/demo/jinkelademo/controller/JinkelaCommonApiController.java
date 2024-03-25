@@ -24,6 +24,7 @@ public class JinkelaCommonApiController {
     return currentUser;
   }
 
+  
   @GetMapping("/{jinkelaUserId}/menus")
   public List<JinkelaMenu> listAllMenusByJinkelaUserId(@PathVariable("jinkelaUserId") String jinkelaUserId, @AuthenticationPrincipal JinkelaUser currentUser) {
     return jinkelaMenuService.listAllMenusByJinkelaUserId(currentUser.getId());
