@@ -30,4 +30,3 @@ logging:
     "org.springframework.jdbc": debug
     "org.springframework.web": debug
     "org.springframework.transaction": debug
-
