@@ -1,10 +1,14 @@
 package dev.jinkela.demo.jinkelademo.utils;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
+
+import com.fasterxml.jackson.databind.util.ByteBufferBackedInputStream;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.*;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import javax.imageio.ImageIO;;
@@ -15,7 +19,7 @@ public class IdenticonsUtil {
     throw new IllegalStateException();
   }
 
-  public static void createImageByIdStr(String idstr) throws Exception {
+  public static String createImageByIdStr(String idstr) throws Exception {
 
     String sha1Hex = DigestUtils.sha1Hex(idstr);
     char[] chars = sha1Hex.toCharArray();
@@ -57,12 +61,15 @@ public class IdenticonsUtil {
     }
 
 
-    ImageIO.write(bufferedImage, "png", new File("tgest.png"));
+
+    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    ImageIO.write(bufferedImage, "png", bos);
+    return String.format("data:image/png;base64,%s", Base64.encodeBase64String(bos.toByteArray()));
   }
 
   public static void main(String[] args) throws Exception {
 
-    createImageByIdStr("asdgb 1235basd123");
+    System.out.println(createImageByIdStr("superadmin"));;
   }
 
 }

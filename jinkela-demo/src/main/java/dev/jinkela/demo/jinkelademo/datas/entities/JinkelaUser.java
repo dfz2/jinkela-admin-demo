@@ -6,14 +6,12 @@ import java.util.Set;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
-import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import dev.jinkela.demo.jinkelademo.datas.AuditMetadata;
-import dev.jinkela.demo.jinkelademo.datas.converters.Enabled;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,6 +25,7 @@ public class JinkelaUser extends AuditMetadata implements UserDetails, Credentia
   private String nickname;
   private String username;
   private transient String password;
+  private String avatar;
   private Boolean enabled;
   private Boolean accountNonExpired;
   private Boolean accountNonLocked;

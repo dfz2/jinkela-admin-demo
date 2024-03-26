@@ -36,7 +36,7 @@ const handleCommand = async (command) => {
       <div class="flex mr-3">
         <el-dropdown @command="handleCommand">
           <div class="flex justify-center items-center">
-            <el-avatar :size="30" :icon="UserFilled" />
+            <el-avatar :size="30" :src="userInfo.avatar" :icon="UserFilled" />
             <div class="ml-1 text-white">{{ userInfo.nickname }}</div>
           </div>
           <template #dropdown>
