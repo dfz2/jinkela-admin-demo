@@ -2,6 +2,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "IdenticonsUtil",
+      "request": "launch",
+      "mainClass": "dev.jinkela.demo.jinkelademo.utils.IdenticonsUtil",
+      "projectName": "jinkela-demo"
+    },
+    {
+      "type": "java",
       "name": "Spring Boot-JinkelaDemoApplication<jinkela-demo>",
       "request": "launch",
       "cwd": "${workspaceFolder}",
