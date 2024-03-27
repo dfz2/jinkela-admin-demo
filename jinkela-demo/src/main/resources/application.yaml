@@ -8,6 +8,8 @@ server:
 spring:
   application:
     name: jinkela-demo
+  flyway:
+    baseline-version: 1.0.0
   mvc:
     log-request-details: true
   data:
@@ -19,7 +21,7 @@ spring:
     white-list: "/favicon.ico,/jinkela/open/publickey"
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/test2?useSSL=false
     username: root
     password: "123456"
 
