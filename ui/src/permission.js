@@ -5,6 +5,8 @@ import { INDEX_ROUTE, INDEX_ROUTE_NAME, INDEX } from './router/routes'
 // NProgress配置
 // NProgress.configure({ showSpinner: false })
 
+
+
 // 免登录白名单
 const whiteList = ['/login', '/forbidden']
 
