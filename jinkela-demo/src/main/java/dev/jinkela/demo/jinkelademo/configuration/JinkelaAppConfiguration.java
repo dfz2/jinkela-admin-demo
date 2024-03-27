@@ -9,7 +9,7 @@ import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 
 @Configuration
-class JikelaAppConfiguration {
+class JinkelaAppConfiguration {
 
   @Bean
   Validator validator() {
