@@ -10,11 +10,11 @@ declare namespace API {
     keepAlive: string;
     permission: string;
     name: string;
-    arguments: string;
+    params: string;
     icon: string;
     type: string;
     active: string;
-    children: Array<API.Menu>
+    children: API.Menu[]
   }
 
 
@@ -22,6 +22,11 @@ declare namespace API {
     username: string;
     password: string;
     enabled: boolean;
+    avatar: string;
+    accountNonExpired: boolean;
+    accountNonLocked: boolean;
+    credentialsNonExpired: boolean;
+    authorities: any[];
   }
 
 }

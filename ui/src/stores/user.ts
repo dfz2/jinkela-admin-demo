@@ -4,10 +4,10 @@ import { getUserinfoApi, getMenusApi } from "@/api/user";
 import { type RouteRecordRaw } from 'vue-router'
 
 interface UserState {
-  userInfo: any;
+  userInfo: Partial<API.UserInfo>;
   routes: RouteRecordRaw[];
   menus: API.Menu[];
-  perms: string[];
+  perms: any[];
 }
 
 
@@ -22,9 +22,9 @@ export const useUserStore = defineStore('userStore', {
     getUserInfo() {
       return new Promise((resolve, reject) => {
         getUserinfoApi()
-          .then((data) => {
+          .then((data: any) => {
             this.userInfo = data
-            this.perms = ["*"]
+            this.perms = data.authorities
             resolve(data)
           })
           .catch((error) => {

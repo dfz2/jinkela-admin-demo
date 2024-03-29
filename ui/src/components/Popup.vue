@@ -26,7 +26,7 @@
     </div>
 </template>
 
-<script >
+<script lang="ts">
 import { defineComponent, nextTick, provide, ref } from 'vue'
 
 export default defineComponent({

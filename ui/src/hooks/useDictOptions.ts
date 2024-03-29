@@ -1,4 +1,4 @@
-import { dictDataAll } from '@/api/setting/dict'
+import { dictDataAll } from '@/api/dict'
 import { reactive, toRaw } from 'vue'
 
 interface Options {

@@ -28,7 +28,7 @@ public class JinkelaMenu extends AuditMetadata {
   private String path;
   private String component;
   private String active;
-  private String arguments;
+  private String params;
   private Boolean keepAlive;
   private Boolean hidden;
   private Boolean enabled;

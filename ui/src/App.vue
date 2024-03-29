@@ -1,13 +1,14 @@
-<script setup>
+<script lang="ts" setup>
 import { ref, computed } from 'vue'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
-const language = ref('zh-cn')
+import en from 'element-plus/dist/locale/en.mjs'
+const language = ref<string>('zh-cn')
 const locale = computed(() => (language.value === 'zh-cn' ? zhCn : en))
 </script>
 
 <template>
   <el-config-provider :locale="locale">
-    <router-view></router-view>
+    <router-view/>
   </el-config-provider>
 </template>
 

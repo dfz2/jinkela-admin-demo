@@ -86,7 +86,7 @@ onMounted(() => {
       </el-form>
     </el-card>
     <el-card v-loading="pager.loading" class="mt-4 !border-none" shadow="never">
-      <el-button v-perms="['system:admin:add']" type="primary" @click="handleAdd" :icon="Plus">
+      <el-button v-perms="['xinzhengguanliyuan']" type="primary" @click="handleAdd" :icon="Plus">
         新增
       </el-button>
       <div class="mt-4">
@@ -98,7 +98,7 @@ onMounted(() => {
           <el-table-column label="创建时间" prop="createdAt" min-width="120"/>
           <el-table-column label="操作" min-width="120" fixed="right">
             <template #default="{ row }">
-              <el-button v-perms="['system:admin:edit']" type="primary" link @click="handleEdit(row)">
+              <el-button v-perms="['gengxinguanliyuan']" type="primary" link @click="handleEdit(row)">
                 编辑
               </el-button>
               <el-button v-if="row.id != 1" v-perms="['system:admin:del']" type="danger" link
