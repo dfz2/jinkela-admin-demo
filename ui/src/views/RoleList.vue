@@ -1,4 +1,4 @@
-<script setup name="role">
+<script lang="ts" setup>
 import { roleLists, roleDelete } from '@/api/role'
 import { usePaging } from '@/hooks/usePaging'
 import Pagination from '@/components/Pagination.vue'
@@ -98,4 +98,3 @@ getLists()
     <!-- <auth-popup v-if="showAuth" ref="authRef" @success="getLists" @close="showAuth = false" /> -->
   </div>
 </template>
-@/composables/usePaging

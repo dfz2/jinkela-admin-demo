@@ -1,19 +1,27 @@
 import { defineStore } from 'pinia'
 import { filterAsyncRoutes } from '@/router'
 import { getUserinfoApi, getMenusApi } from "@/api/user";
+import { type RouteRecordRaw } from 'vue-router'
+
+interface UserState {
+  userInfo: any;
+  routes: RouteRecordRaw[];
+  menus: API.Menu[];
+  perms: string[];
+}
 
 
 export const useUserStore = defineStore('userStore', {
-  state: () => ({
+  state: (): UserState => ({
     userInfo: {},
     routes: [],
-    menu: [],
+    menus: [],
     perms: []
   }),
   actions: {
     getUserInfo() {
       return new Promise((resolve, reject) => {
-        getUserinfoApi({})
+        getUserinfoApi()
           .then((data) => {
             this.userInfo = data
             this.perms = ["*"]
@@ -24,11 +32,11 @@ export const useUserStore = defineStore('userStore', {
           })
       })
     },
-    getRoutes(jinkelaUserId) {
+    getRoutes(jinkelaUserId: string) {
       return new Promise((resolve, reject) => {
         getMenusApi(jinkelaUserId)
-          .then((data) => {
-            this.menu = data
+          .then((data: any) => {
+            this.menus = data
             this.routes = filterAsyncRoutes(data)
             resolve(data)
           })

@@ -1,10 +1,8 @@
 <script setup>
-import { ref, computed  } from 'vue'
+import { ref, computed } from 'vue'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 const language = ref('zh-cn')
 const locale = computed(() => (language.value === 'zh-cn' ? zhCn : en))
-
-
 </script>
 
 <template>
@@ -19,8 +17,4 @@ body {
   padding: 0;
   background-color: #F2F3F5;
 }
-
-
-
-
 </style>

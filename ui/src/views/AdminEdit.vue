@@ -16,7 +16,7 @@
 
 
 
-<script setup>
+<script lang="ts" setup>
 import Popup from '@/components/Popup.vue'
 import { adminAdd, adminEdit, adminDetail } from '@/api/admin'
 import { shallowRef, computed, ref, reactive } from 'vue'

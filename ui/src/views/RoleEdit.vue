@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 import { roleAdd, roleDetail, roleEdit } from '@/api/role'
 import Popup from '@/components/Popup.vue'
 import { ElMessage } from 'element-plus';

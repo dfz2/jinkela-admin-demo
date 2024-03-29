@@ -1,4 +1,4 @@
-<script setup name="admin">
+<script lang="ts" setup>
 import { adminLists, adminDelete, adminStatus } from '@/api/admin'
 import { usePaging } from '@/hooks/usePaging'
 import Pagination from '@/components/Pagination.vue'

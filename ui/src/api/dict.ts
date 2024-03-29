@@ -1,7 +1,7 @@
 import service from "@/api/service";
 
 // 字典类型列表
-export function dictTypeLists(params) {
+export function dictTypeLists(params: any) {
   return service({
     url: '/api/system/setting/dictionary-type/list',
     method: 'GET',
@@ -10,7 +10,7 @@ export function dictTypeLists(params) {
 }
 
 // 字典类型列表
-export function dictTypeAll(params) {
+export function dictTypeAll(params: any) {
   return service({
     url: '/api/system/setting/dictionary-type/all',
     method: 'GET',
@@ -19,7 +19,7 @@ export function dictTypeAll(params) {
 }
 
 // 添加字典类型
-export function dictTypeAdd(params) {
+export function dictTypeAdd(params: any) {
   return service({
     url: '/api/system/setting/dictionary-type/add',
     method: 'POST',
@@ -28,7 +28,7 @@ export function dictTypeAdd(params) {
 }
 
 // 编辑字典类型
-export function dictTypeEdit(params) {
+export function dictTypeEdit(params: any) {
   return service({
     url: '/api/system/setting/dictionary-type/edit',
     method: 'POST',
@@ -37,7 +37,7 @@ export function dictTypeEdit(params) {
 }
 
 // 删除字典类型
-export function dictTypeDelete(params) {
+export function dictTypeDelete(params: any) {
   return service({
     url: '/api/system/setting/dictionary-type/del',
     method: 'POST',
@@ -46,7 +46,7 @@ export function dictTypeDelete(params) {
 }
 
 // 字典数据列表
-export function dictDataLists(params) {
+export function dictDataLists(params: any) {
   return service(
     {
       url: '/api/system/setting/dictionary-data/list',

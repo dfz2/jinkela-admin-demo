@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 import { dictTypeDelete, dictTypeLists, dictDataLists } from '@/api/dict'
 import { nextTick, shallowRef, ref, reactive } from 'vue'
 // import EditPopup from './edit.vue'

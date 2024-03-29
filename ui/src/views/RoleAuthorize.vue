@@ -41,7 +41,7 @@
   </el-card>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { menuLists } from '@/api/menu';
 import { reactive } from 'vue';
 import { useRouter } from "vue-router";

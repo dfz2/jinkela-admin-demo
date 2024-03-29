@@ -1,20 +1,19 @@
-<script setup>
-
+<script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import { ElMessage } from 'element-plus'
-import { useRoute, useRouter } from "vue-router";
+import { ElMessage, FormInstance } from 'element-plus'
+import { useRouter } from "vue-router";
 import { INDEX } from "@/router/routes";
 import { getPublicKeyApi, loginApi } from "@/api/user";
 import JSEncrypt from 'jsencrypt/bin/jsencrypt';
 import { useUrlSearchParams } from '@vueuse/core'
 
 const jsEncrypt = new JSEncrypt();
-const formRef = ref(null)
+const formRef = ref<FormInstance>()
 const router = useRouter()
-const route = useRoute()
-const loading = ref(false)
+const loading = ref<boolean>(false)
 
-const state = reactive({
+
+const state = reactive<Partial<API.UserInfo>>({
   username: 'superadmin',
   password: '123456',
 })
@@ -24,7 +23,7 @@ const handleLogin = async () => {
   await formRef.value?.validate()
   loading.value = true
   try {
-    const res = await getPublicKeyApi()
+    const res: any = await getPublicKeyApi()
     jsEncrypt.setPublicKey(res.publicKey)
     await loginApi({ username: state.username, password: jsEncrypt.encrypt(state.password) })
     ElMessage({

@@ -92,7 +92,7 @@
 
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { Expand, Fold, Search } from '@element-plus/icons-vue'
 import { menuLists } from '@/api/menu';
 import { reactive, ref, watch, computed } from 'vue';

@@ -1,17 +1,13 @@
-<script setup>
+<script lang="ts" setup>
 import { useUserStore } from '@/stores/user';
 import { MoreFilled, SwitchButton, User, UserFilled } from '@element-plus/icons-vue'
 import { computed } from 'vue';
-import { logoutApi } from "@/api/user.js";
+import { logoutApi } from "@/api/user";
 import { ElMessageBox } from "element-plus";
-
-
 
 const userStore = useUserStore()
 const userInfo = computed(() => userStore.userInfo)
-const handleCommand = async (command) => {
-
-
+const handleCommand = async (command: string) => {
   if (command == 'logout') {
     await ElMessageBox.confirm('确定退出登录吗？', '温馨提示', {
       confirmButtonText: '确定',
@@ -22,7 +18,6 @@ const handleCommand = async (command) => {
     userStore.userInfo = {}
     window.location.reload()
   }
-
 }
 </script>
 

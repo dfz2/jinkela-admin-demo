@@ -1,4 +1,4 @@
-<script setup name="menu">
+<script  lang="ts" setup>
 import { menuDelete, menuLists } from '@/api/menu'
 // import EditPopup from './edit.vue'
 import { Plus } from "@element-plus/icons-vue";

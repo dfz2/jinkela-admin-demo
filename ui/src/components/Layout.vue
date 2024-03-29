@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 import AppHeader from './Header.vue';
 import AppMenu from './Menu.vue';
 import AppMain from './Main.vue';
