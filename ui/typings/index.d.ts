@@ -3,7 +3,7 @@ type PromiseFun = (...arg: any[]) => Promise<any>
 
 declare namespace API {
 
-  interface Menu {
+  interface JinkelaMenu {
     path: string;
     component: string;
     hidden: string;
@@ -18,8 +18,10 @@ declare namespace API {
   }
 
 
-  interface UserInfo {
+  interface JinkelaUser {
+    id: string | number;
     username: string;
+    nickname: string;
     password: string;
     enabled: boolean;
     avatar: string;

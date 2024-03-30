@@ -1,6 +1,6 @@
 <template>
     <div class="edit-popup">
-        <Popup ref="popupRef" :title="popupTitle" :async="true" width="550px" @confirm="handleSubmit"
+        <Popup ref="popupRef" :title="popupTitle" :async="true" width="380px" @confirm="handleSubmit"
             @close="handleClose">
             <el-form ref="formRef" :model="formData" label-width="84px" :rules="formRules">
                 <el-form-item label="账号" prop="username">
@@ -20,22 +20,19 @@
 import Popup from '@/components/Popup.vue'
 import { adminAdd, adminEdit, adminDetail } from '@/api/admin'
 import { shallowRef, computed, ref, reactive } from 'vue'
-import { ElMessage } from 'element-plus';
+import { ElMessage, FormInstance } from 'element-plus';
 
+const formRef = shallowRef<FormInstance>()
+const popupRef = shallowRef<InstanceType<typeof Popup>>()
+const mode = ref<string>('add')
 const emit = defineEmits(['success', 'close'])
 
-const formRef = shallowRef(null)
-const popupRef = shallowRef(null)
-const mode = ref('add')
 const popupTitle = computed(() => mode.value == 'edit' ? '编辑管理员' : '新增管理员')
-
-const formData = reactive({
+const formData = reactive<Partial<API.JinkelaUser>>({
     id: 0,
     username: '',
-    nickname: '',
-    avatar: '',
+    nickname: ''
 })
-
 const isRoot = computed(() => formData.id == 1000000 || mode.value == 'edit')
 
 const formRules = reactive({
@@ -69,8 +66,8 @@ const open = (type = 'add') => {
     popupRef.value?.open()
 }
 
-const setFormData = async (row) => {
-    const data = await adminDetail({
+const setFormData = async (row: API.JinkelaUser) => {
+    const data: any = await adminDetail({
         id: row.id
     })
     for (const key in formData) {

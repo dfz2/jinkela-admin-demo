@@ -18,7 +18,7 @@ export function getModulesKey() {
 }
 
 // 过滤路由所需要的数据
-export function filterAsyncRoutes(menus: Array<API.Menu>, firstRoute: boolean = true): RouteRecordRaw[]  {
+export function filterAsyncRoutes(menus: Array<API.JinkelaMenu>, firstRoute: boolean = true): RouteRecordRaw[] {
   return menus.map((route) => {
     const routeRecord = createRouteRecord(route, firstRoute)
     if (route.children != null && route.children && route.children.length) {
@@ -30,7 +30,7 @@ export function filterAsyncRoutes(menus: Array<API.Menu>, firstRoute: boolean = 
 
 
 // 创建一条路由记录
-export function createRouteRecord(menu: API.Menu, firstRoute: boolean): RouteRecordRaw {
+export function createRouteRecord(menu: API.JinkelaMenu, firstRoute: boolean): RouteRecordRaw {
   //@ts-ignore
   const routeRecord: RouteRecordRaw = {
     path: isExternal(menu.path) ? menu.path : firstRoute ? `/${menu.path}` : menu.path,
@@ -40,7 +40,7 @@ export function createRouteRecord(menu: API.Menu, firstRoute: boolean): RouteRec
       keepAlive: menu.keepAlive,
       title: menu.name,
       perms: menu.permission,
-      query: menu.arguments,
+      query: menu.params,
       icon: menu.icon,
       type: menu.type,
       active: menu.active

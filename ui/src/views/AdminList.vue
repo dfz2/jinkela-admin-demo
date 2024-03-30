@@ -1,42 +1,20 @@
 <script lang="ts" setup>
-import { adminLists, adminDelete, adminStatus } from '@/api/admin'
+import { adminLists, adminDelete } from '@/api/admin'
 import { usePaging } from '@/hooks/usePaging'
 import Pagination from '@/components/Pagination.vue'
-import AdminEdit from './AdminEdit.vue'
+import AdminEditPopup from './AdminEdit.vue'
 import { shallowRef, reactive, ref, onMounted, nextTick } from 'vue'
 import { Plus } from "@element-plus/icons-vue"
 import { ElMessage, ElMessageBox } from "element-plus"
 
-const editRef = shallowRef(null)
-const showEdit = ref(false)
-
-const formData = reactive({
-  username: null,
-  nickname: null,
-  role: null
-})
-
+const editRef = shallowRef<InstanceType<typeof AdminEditPopup>>()
+const showEdit = ref<boolean>(false)
+const queryFrom = reactive<Partial<API.JinkelaUser>>({})
 
 const { pager, getLists, resetParams, resetPage } = usePaging({
   fetchFun: adminLists,
-  params: formData
+  params: queryFrom
 })
-
-const changeStatus = async (active, id) => {
-  try {
-    await ElMessageBox.confirm(`确定${active ? '停用' : '开启'}当前管理员？`, '温馨提示', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'info'
-    })
-
-    await adminStatus({ id })
-    ElMessage.success('修改成功')
-    getLists()
-  } catch (error) {
-    getLists()
-  }
-}
 
 
 const handleAdd = async () => {
@@ -45,14 +23,14 @@ const handleAdd = async () => {
   editRef.value?.open('add')
 }
 
-const handleEdit = async (data) => {
+const handleEdit = async (data: API.JinkelaUser) => {
   showEdit.value = true
   await nextTick()
   editRef.value?.open('edit')
   editRef.value?.setFormData(data)
 }
 
-const handleDelete = async (id) => {
+const handleDelete = async (id: string) => {
   await ElMessageBox.confirm('确定要删除？', '温馨提示', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
@@ -67,17 +45,20 @@ const handleDelete = async (id) => {
 onMounted(() => {
   getLists()
 })
+
+
+
 </script>
 
 <template>
   <div class="admin">
     <el-card class="!border-none" shadow="never">
-      <el-form class="mb-[-16px]" :model="formData" inline>
+      <el-form class="mb-[-16px]" :model="queryFrom" inline>
         <el-form-item label="管理员账号">
-          <el-input v-model="formData.username" class="w-[280px]" clearable @keyup.enter="resetPage" />
+          <el-input v-model="queryFrom.username" class="w-[280px]" clearable @keyup.enter="resetPage" />
         </el-form-item>
         <el-form-item label="管理员名称">
-          <el-input v-model="formData.nickname" class="w-[280px]" clearable @keyup.enter="resetPage" />
+          <el-input v-model="queryFrom.nickname" class="w-[280px]" clearable @keyup.enter="resetPage" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="resetPage">查询</el-button>
@@ -91,11 +72,11 @@ onMounted(() => {
       </el-button>
       <div class="mt-4">
         <el-table :data="pager.lists" size="large">
-          <el-table-column label="ID" prop="id"  />
-          <el-table-column label="登录账号" prop="username"  />
-          <el-table-column label="昵称" prop="nickname"  />
-          <el-table-column label="状态" prop="enabled"  />
-          <el-table-column label="创建时间" prop="createdAt" min-width="120"/>
+          <el-table-column label="ID" prop="id" />
+          <el-table-column label="登录账号" prop="username" />
+          <el-table-column label="昵称" prop="nickname" />
+          <el-table-column label="状态" prop="enabled" />
+          <el-table-column label="创建时间" prop="createdAt" min-width="120" />
           <el-table-column label="操作" min-width="120" fixed="right">
             <template #default="{ row }">
               <el-button v-perms="['gengxinguanliyuan']" type="primary" link @click="handleEdit(row)">
@@ -114,6 +95,6 @@ onMounted(() => {
       </div>
     </el-card>
 
-    <AdminEdit v-if="showEdit" ref="editRef" @success="getLists" @close="showEdit = false" />
+    <AdminEditPopup v-if="showEdit" ref="editRef" @success="getLists" @close="showEdit = false" />
   </div>
 </template>
