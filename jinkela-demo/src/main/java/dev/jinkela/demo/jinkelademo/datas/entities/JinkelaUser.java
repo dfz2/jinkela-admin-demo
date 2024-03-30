@@ -30,6 +30,7 @@ public class JinkelaUser extends AuditMetadata implements UserDetails, Credentia
   private Boolean accountNonExpired;
   private Boolean accountNonLocked;
   private Boolean credentialsNonExpired;
+  private Boolean deleted;
   @Transient
   private transient Set<GrantedAuthority> authorities = new HashSet<>();
 
@@ -44,6 +45,7 @@ public class JinkelaUser extends AuditMetadata implements UserDetails, Credentia
     this.accountNonExpired = true;
     this.accountNonLocked = true;
     this.credentialsNonExpired = true;
+    this.deleted = false;
   }
 
   @Override

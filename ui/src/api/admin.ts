@@ -23,7 +23,7 @@ export function adminEdit(params: any) {
 
 // 管理员删除
 export function adminDelete(params: any) {
-    return service({ url: '/api/system/admin/del', method: 'POST', params })
+    return service({ url: `/api/jinkela/users/${params.id}`, method: 'DELETE' })
 }
 
 // 管理员删除

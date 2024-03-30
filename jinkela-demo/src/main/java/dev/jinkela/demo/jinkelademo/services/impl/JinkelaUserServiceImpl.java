@@ -3,7 +3,6 @@ package dev.jinkela.demo.jinkelademo.services.impl;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
@@ -19,11 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 import dev.jinkela.demo.jinkelademo.datas.entities.JinkelaUser;
 import dev.jinkela.demo.jinkelademo.datas.repositories.JinkelaUserRepository;
 import dev.jinkela.demo.jinkelademo.dtos.JinkelaUserCreateDTO;
-import dev.jinkela.demo.jinkelademo.dtos.JinkelaUserListPageDTO;
-import dev.jinkela.demo.jinkelademo.exceptions.DataConflictException;
+import dev.jinkela.demo.jinkelademo.dtos.ListAllJikelaUsersDTO;
 import dev.jinkela.demo.jinkelademo.exceptions.UserNotFoundException;
 import dev.jinkela.demo.jinkelademo.services.JinkelaUserService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -35,10 +32,8 @@ class JinkelaUserServiceImpl implements JinkelaUserService {
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    JinkelaUser jinkelaUser = jinkelaUserRepository.findJinkelaUserByUsername(username)
-        .orElseThrow(() -> new UsernameNotFoundException("用户名密码错误"));
-    Set<GrantedAuthority> authorities = jinkelaUserRepository.listAllPermissionsByJinkelaUserId(jinkelaUser.getId())
-        .stream().map(t -> new SimpleGrantedAuthority(t)).collect(Collectors.toSet());
+    JinkelaUser jinkelaUser = jinkelaUserRepository.findJinkelaUserByUsername(username).orElseThrow(() -> new UsernameNotFoundException("用户名密码错误"));
+    Set<GrantedAuthority> authorities = jinkelaUserRepository.listAllPermissionsByJinkelaUserId(jinkelaUser.getId()).stream().map(t -> new SimpleGrantedAuthority(t)).collect(Collectors.toSet());
     jinkelaUser.setAuthorities(authorities);
     return jinkelaUser;
   }
@@ -54,11 +49,14 @@ class JinkelaUserServiceImpl implements JinkelaUserService {
   }
 
   @Override
-  public Page<JinkelaUser> listAllJikelaUsers(JinkelaUserListPageDTO request, Pageable pageable) {
+  public Page<JinkelaUser> listAllJikelaUsers(ListAllJikelaUsersDTO request, Pageable pageable) {
     JinkelaUser probe = new JinkelaUser();
-    probe.setUsername(request.getUsernmae());
-    final ExampleMatcher matching = ExampleMatcher.matching().withIgnoreNullValues().withMatcher("username",
-        ExampleMatcher.GenericPropertyMatchers.contains());
+    probe.setDeleted(false);
+    probe.setUsername(request.getUsername());
+    probe.setNickname(request.getNickname());
+    final var matching = ExampleMatcher.matching().withIgnoreNullValues()
+      .withMatcher("username", ExampleMatcher.GenericPropertyMatchers.contains())
+      .withMatcher("nickname",ExampleMatcher.GenericPropertyMatchers.contains());
     Example<JinkelaUser> example = Example.of(probe, matching);
     return jinkelaUserRepository.findAll(example, pageable);
   }
@@ -66,13 +64,10 @@ class JinkelaUserServiceImpl implements JinkelaUserService {
   @Transactional
   @Override
   public void addNewUserToDb(JinkelaUserCreateDTO jinkelaUserCreateDTO) {
-    try {
-      var jinkelaUser = new JinkelaUser(jinkelaUserCreateDTO.getUsername(),
-          jinkelaUserCreateDTO.getNickname(), passwordEncoder.encode("123456"));
-      jinkelaUserRepository.saveOrUpdate(jinkelaUser);
-    } catch (DuplicateKeyException e) {
-      throw new DataConflictException("账号已存在");
-    }
+    var jinkelaUser = new JinkelaUser(
+        jinkelaUserCreateDTO.getNickname(), jinkelaUserCreateDTO.getUsername(),
+        passwordEncoder.encode("123456"));
+    jinkelaUserRepository.saveOrUpdate2(jinkelaUser);
   }
 
   @Transactional
@@ -80,12 +75,16 @@ class JinkelaUserServiceImpl implements JinkelaUserService {
   public void modifyUserToDb(Long jinkelaUserId, JinkelaUserCreateDTO jinkelaUserCreateDTO) {
     var jinkelaUser = jinkelaUserRepository.findById(jinkelaUserId).orElseThrow(UserNotFoundException::new);
     jinkelaUser.setNickname(jinkelaUserCreateDTO.getNickname());
+    jinkelaUserRepository.saveOrUpdate2(jinkelaUser);
+  }
 
-    try {
-      jinkelaUserRepository.saveOrUpdate(jinkelaUser);
-    } catch (DuplicateKeyException e) {
-      throw new DataConflictException("账号已存在");
-    }
+  @Transactional
+  @Override
+  public void deleteJinkelaUser(Long jinkelaUserId) {
+    var jinkelaUser = jinkelaUserRepository.findById(jinkelaUserId).orElseThrow(UserNotFoundException::new);
+    jinkelaUser.setEnabled(false);
+    jinkelaUser.setDeleted(true);
+    jinkelaUserRepository.save(jinkelaUser);
   }
 
 }

@@ -9,7 +9,9 @@ import { ElMessage, ElMessageBox } from "element-plus"
 
 const editRef = shallowRef<InstanceType<typeof AdminEditPopup>>()
 const showEdit = ref<boolean>(false)
-const queryFrom = reactive<Partial<API.JinkelaUser>>({})
+const queryFrom = reactive<Partial<API.JinkelaUser>>({
+  username: ''
+})
 
 const { pager, getLists, resetParams, resetPage } = usePaging({
   fetchFun: adminLists,
@@ -82,7 +84,7 @@ onMounted(() => {
               <el-button v-perms="['gengxinguanliyuan']" type="primary" link @click="handleEdit(row)">
                 编辑
               </el-button>
-              <el-button v-if="row.id != 1" v-perms="['system:admin:del']" type="danger" link
+              <el-button v-if="row.id != 1000000" v-perms="['shanchuguanliyuan']" type="danger" link
                 @click="handleDelete(row.id)">
                 删除
               </el-button>
