@@ -32,7 +32,7 @@ public class JinkelaUser extends AuditMetadata implements UserDetails, Credentia
   private Boolean credentialsNonExpired;
   private Boolean deleted;
   @Transient
-  private transient Set<GrantedAuthority> authorities = new HashSet<>();
+  private Set<GrantedAuthority> authorities = new HashSet<>();
 
   public JinkelaUser() {
   }

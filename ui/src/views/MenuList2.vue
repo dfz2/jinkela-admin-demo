@@ -93,10 +93,11 @@
 </template>
 
 <script lang="ts" setup>
-import { Expand, Fold, Search } from '@element-plus/icons-vue'
-import { menuLists } from '@/api/menu';
+import { Expand,  Search } from '@element-plus/icons-vue'
+import { menuLists, menuEdit, menuDetail } from '@/api/menu';
 import { reactive, ref, watch, computed } from 'vue';
 import { getModulesKey } from '@/router';
+import { ElMessage } from 'element-plus';
 
 const defaultProps = {
   children: 'children',
@@ -104,11 +105,10 @@ const defaultProps = {
 }
 
 const treeRef = ref()
-const currentNode = ref()
-const filterText = ref('')
+const filterText = ref<string>('')
 const jinkelaMenuId = ref('')
 const menus = ref([])
-const components = ref([])
+const components = ref<Array<any>>([{}])
 
 
 const state = reactive({
@@ -139,7 +139,7 @@ const getLocalModulesKey = () => {
   components.value = getModulesKey()
 }
 
-const filterNode = (value, data) => {
+const filterNode = (value: string, data: any) => {
   if (!value) return true
   return data.name.includes(value)
 }
@@ -162,8 +162,9 @@ const reset = () => {
   jinkelaMenuId.value = ''
 }
 
-const handleTreeCheck = (data, list) => {
-  Object.assign(state, data)
+const handleTreeCheck = async (data: API.JinkelaMenu, list: any) => {
+  const res: any = await menuDetail({id: data.id})
+  Object.assign(state, res)
   jinkelaMenuId.value = data.id
   const length = list.checkedKeys.length
   if (length == 2) {
@@ -176,15 +177,17 @@ const handleTreeCheck = (data, list) => {
 
 }
 
-const onSubmit = () => {
+const onSubmit = async () => {
   const json = { ...state };
   console.log(json);
+  menuEdit(json)
   console.log('submit!')
+  ElMessage.success("保存成功")
 }
 
 
 const getMenuLists = async () => {
-  const res = await menuLists()
+  const res: any = await menuLists()
   menus.value = res
 }
 

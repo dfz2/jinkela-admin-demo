@@ -1,8 +1,8 @@
 import service from "@/api/service";
 
 // 菜单列表
-export function menuLists(params: any) {
-  return service({ url: '/api/jinkela/menus', method: 'GET', params })
+export function menuLists() {
+  return service({ url: '/api/jinkela/menus', method: 'GET' })
 }
 
 // 添加菜单
@@ -12,7 +12,7 @@ export function menuAdd(params: any) {
 
 // 编辑菜单
 export function menuEdit(params: any) {
-  return service({ url: '/api/system/menu/edit', method: 'POST', params })
+  return service({ url: '/api/jinkela/menus', method: 'PUT', data: params })
 }
 
 // 菜单删除
@@ -22,5 +22,5 @@ export function menuDelete(params: any) {
 
 // 菜单删除
 export function menuDetail(params: any) {
-  return service({ url: '/api/system/menu/detail', method: 'POST', params })
+  return service({ url: `/api/jinkela/menus/${params.id}`, method: 'GET', params })
 }

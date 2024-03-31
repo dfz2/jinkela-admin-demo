@@ -4,6 +4,7 @@ type PromiseFun = (...arg: any[]) => Promise<any>
 declare namespace API {
 
   interface JinkelaMenu {
+    id: string;
     path: string;
     component: string;
     hidden: string;
