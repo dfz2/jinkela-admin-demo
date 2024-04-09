@@ -1,9 +1,21 @@
-import axios from "axios";
+import axios, { type AxiosRequestConfig }  from "axios";
 import { ElMessage } from "element-plus";
 
-const service = axios.create({});
+
+const defaultConfig: AxiosRequestConfig = {
+  withCredentials: true,
+  isReturnDefaultResponse: false
+}
+
+
+const service = axios.create(defaultConfig);
 
 service.interceptors.response.use((res) => {
+  const isReturnDefaultResponse = res.config.isReturnDefaultResponse
+  if(isReturnDefaultResponse) {
+    return res
+  }
+
   const { status, data } = res;
   if (status !== 200) {
     ElMessage({
@@ -14,10 +26,10 @@ service.interceptors.response.use((res) => {
   return data;
 },
   (error) => {
-    console.log(error)
+    // console.log(error)
     let { response, message } = error;
 
-    console.log(error)
+    // console.log(error)
     const { status, data } = response
     // ElMessage({
     //     message: message,
