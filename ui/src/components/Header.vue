@@ -4,6 +4,7 @@ import { MoreFilled, SwitchButton, User, UserFilled } from '@element-plus/icons-
 import { computed } from 'vue';
 import { logoutApi } from "@/api/user";
 import { ElMessageBox } from "element-plus";
+import router from '@/router';
 
 const userStore = useUserStore()
 const userInfo = computed(() => userStore.userInfo)
@@ -16,7 +17,8 @@ const handleCommand = async (command: string) => {
     })
     await logoutApi()
     userStore.userInfo = {}
-    window.location.reload()
+    router.replace("/login")
+    // window.location.reload()
   }
 }
 </script>

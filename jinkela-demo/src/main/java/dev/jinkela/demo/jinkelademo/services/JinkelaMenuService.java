@@ -2,7 +2,6 @@ package dev.jinkela.demo.jinkelademo.services;
 import java.util.List;
 
 import dev.jinkela.demo.jinkelademo.datas.entities.JinkelaMenu;
-import dev.jinkela.demo.jinkelademo.dtos.JinekelaMenuDTO;
 
 public interface JinkelaMenuService {
   
@@ -10,9 +9,9 @@ public interface JinkelaMenuService {
 
   List<JinkelaMenu> listAllMenus();
 
-  void modifyJinkelaMenus(JinekelaMenuDTO jinekelaMenuDTO);
+  void modifyJinkelaMenus(JinkelaMenu jinkelaMenu);
 
-  void deleteJinkelaMenu(JinekelaMenuDTO jinekelaMenuDTO);
+  void deleteJinkelaMenuById(Long jinkelaMenuId);
 
   JinkelaMenu loadByJinkelaMenuId(Long jinkelaMenuId);
 

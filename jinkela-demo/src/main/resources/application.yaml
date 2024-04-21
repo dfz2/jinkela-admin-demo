@@ -5,6 +5,7 @@ server:
       cookie:
         name: jinkela_distributed_id
 
+
 spring:
   application:
     name: jinkela-demo
@@ -21,9 +22,9 @@ spring:
     white-list: "/favicon.ico,/jinkela/open/publickey"
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/test2?useSSL=false
-    username: root
-    password: "123456"
+    url: jdbc:mysql://${DB_URL}/test2?useSSL=false
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
 
 logging:

@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.jinkela.demo.jinkelademo.datas.entities.JinkelaUser;
-import dev.jinkela.demo.jinkelademo.dtos.JinkelaUserCreateDTO;
-import dev.jinkela.demo.jinkelademo.dtos.ListAllJikelaUsersDTO;
 import dev.jinkela.demo.jinkelademo.services.JinkelaUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +25,8 @@ public class JinkelaUserApiController {
   private final JinkelaUserService jinkelaUserService;
 
   @GetMapping
-  public Page<JinkelaUser> listAllJikelaUsers(ListAllJikelaUsersDTO request, Pageable pageable) {
-    return jinkelaUserService.listAllJikelaUsers(request, pageable);
+  public Page<JinkelaUser> listAllJikelaUsers(String name, Pageable pageable) {
+    return jinkelaUserService.listAllJikelaUsers(name, pageable);
   }
 
   @GetMapping("/{jinkelaUserId}")
@@ -36,23 +34,20 @@ public class JinkelaUserApiController {
     return jinkelaUserService.loadByJinkelaUserId(jinkelaUserId);
   }
 
-
   @PostMapping
-  public void addNewUserToDb(@RequestBody @Valid JinkelaUserCreateDTO jinkelaUserCreateDTO) {
-    jinkelaUserService.addNewUserToDb(jinkelaUserCreateDTO);
+  public void addNewUserToDb(@RequestBody @Valid JinkelaUser jinkelaUser) {
+    jinkelaUserService.addNewUserToDb(jinkelaUser);
   }
 
   @PutMapping("/{jinkelaUserId}")
-  public void modifyUserToDb(@PathVariable("jinkelaUserId") Long jinkelaUserId, @RequestBody @Valid JinkelaUserCreateDTO jinkelaUserCreateDTO) {
-    jinkelaUserService.modifyUserToDb(jinkelaUserId, jinkelaUserCreateDTO);
+  public void modifyUserToDb(@PathVariable("jinkelaUserId") Long jinkelaUserId,
+      @RequestBody @Valid JinkelaUser jinkelaUser) {
+    jinkelaUserService.modifyUserToDb(jinkelaUser);
   }
-
 
   @DeleteMapping("/{jinkelaUserId}")
   public void deleteJinkelaUser(@PathVariable("jinkelaUserId") Long jinkelaUserId) {
     jinkelaUserService.deleteJinkelaUser(jinkelaUserId);
   }
-
-
 
 }

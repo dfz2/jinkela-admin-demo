@@ -2,6 +2,7 @@ package dev.jinkela.demo.jinkelademo.controller;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.jinkela.demo.jinkelademo.datas.entities.JinkelaMenu;
-import dev.jinkela.demo.jinkelademo.dtos.JinekelaMenuDTO;
 import dev.jinkela.demo.jinkelademo.services.JinkelaMenuService;
 import lombok.RequiredArgsConstructor;
 
@@ -23,24 +23,28 @@ public class JinkelaMenusApiController {
   private final JinkelaMenuService jinkelaMenuService;
 
   @GetMapping
+  @PreAuthorize("hasAuthority('caidanliebiao')")
   public List<JinkelaMenu> listAllMenus() {
     return jinkelaMenuService.listAllMenus(); 
   }
 
 
   @GetMapping("/{jinkelaMenuId}")
+  @PreAuthorize("hasAuthority('caidanxiangxi')")
   public JinkelaMenu loadMenuById(@PathVariable Long jinkelaMenuId){
     return jinkelaMenuService.loadByJinkelaMenuId(jinkelaMenuId);
   }
 
-  @PutMapping
-  public void modifyJinkelaMenus(@RequestBody JinekelaMenuDTO jinekelaMenuDTO) {
-    jinkelaMenuService.modifyJinkelaMenus(jinekelaMenuDTO);
+  @PutMapping("/{jinkelaMenuId}")
+  @PreAuthorize("hasAuthority('gengxincaidan')")
+  public void modifyJinkelaMenus(@RequestBody JinkelaMenu jinkelaMenu) {
+    jinkelaMenuService.modifyJinkelaMenus(jinkelaMenu);
   }
 
 
   @DeleteMapping("/{jinkelaMenuId}")
-  public void deleteJinkelaMenu(@RequestBody JinekelaMenuDTO jinekelaMenuDTO) {
-    jinkelaMenuService.deleteJinkelaMenu(jinekelaMenuDTO);
+  @PreAuthorize("hasAuthority('shanchucaidan')")
+  public void deleteJinkelaMenu(@RequestBody Long jinkelaMenuId) {
+    jinkelaMenuService.deleteJinkelaMenuById(jinkelaMenuId);
   }
 }

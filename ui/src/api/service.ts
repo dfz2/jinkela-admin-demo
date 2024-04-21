@@ -40,6 +40,13 @@ service.interceptors.response.use((res) => {
       window.location.href = `/login?continue=${window.location.pathname}`
       return Promise.reject(error);
     }
+    if (status === 403) {
+      ElMessage({
+        message: '无权限',
+        type: 'error',
+      })
+    }
+
 
     if (status === 400 || status === 409) {
       const { errorMessage } = data

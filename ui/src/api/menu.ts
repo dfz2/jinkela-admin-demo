@@ -12,7 +12,7 @@ export function menuAdd(params: any) {
 
 // 编辑菜单
 export function menuEdit(params: any) {
-  return service({ url: '/api/jinkela/menus', method: 'PUT', data: params })
+  return service({ url: `/api/jinkela/menus/${params.id}`, method: 'PUT', data: params })
 }
 
 // 菜单删除

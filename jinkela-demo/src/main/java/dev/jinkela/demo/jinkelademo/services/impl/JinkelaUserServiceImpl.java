@@ -17,8 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dev.jinkela.demo.jinkelademo.datas.entities.JinkelaUser;
 import dev.jinkela.demo.jinkelademo.datas.repositories.JinkelaUserRepository;
-import dev.jinkela.demo.jinkelademo.dtos.JinkelaUserCreateDTO;
-import dev.jinkela.demo.jinkelademo.dtos.ListAllJikelaUsersDTO;
 import dev.jinkela.demo.jinkelademo.exceptions.UserNotFoundException;
 import dev.jinkela.demo.jinkelademo.services.JinkelaUserService;
 import lombok.RequiredArgsConstructor;
@@ -49,33 +47,34 @@ class JinkelaUserServiceImpl implements JinkelaUserService {
   }
 
   @Override
-  public Page<JinkelaUser> listAllJikelaUsers(ListAllJikelaUsersDTO request, Pageable pageable) {
+  public Page<JinkelaUser> listAllJikelaUsers(String name, Pageable pageable) {
     JinkelaUser probe = new JinkelaUser();
     probe.setDeleted(false);
-    probe.setUsername(request.getUsername());
-    probe.setNickname(request.getNickname());
+    probe.setUsername(name);
+    probe.setNickname(name);
     final var matching = ExampleMatcher.matching().withIgnoreNullValues()
-      .withMatcher("username", ExampleMatcher.GenericPropertyMatchers.contains())
-      .withMatcher("nickname",ExampleMatcher.GenericPropertyMatchers.contains());
+        .withMatcher("username", ExampleMatcher.GenericPropertyMatchers.contains())
+        .withMatcher("nickname", ExampleMatcher.GenericPropertyMatchers.contains());
     Example<JinkelaUser> example = Example.of(probe, matching);
     return jinkelaUserRepository.findAll(example, pageable);
   }
 
   @Transactional
   @Override
-  public void addNewUserToDb(JinkelaUserCreateDTO jinkelaUserCreateDTO) {
-    var jinkelaUser = new JinkelaUser(
-        jinkelaUserCreateDTO.getNickname(), jinkelaUserCreateDTO.getUsername(),
+  public void addNewUserToDb(JinkelaUser jinkelaUser) {
+    var newjinkelaUser = new JinkelaUser(
+        jinkelaUser.getNickname(),
+        jinkelaUser.getUsername(),
         passwordEncoder.encode("123456"));
-    jinkelaUserRepository.saveOrUpdate2(jinkelaUser);
+    jinkelaUserRepository.saveOrUpdate2(newjinkelaUser);
   }
 
   @Transactional
   @Override
-  public void modifyUserToDb(Long jinkelaUserId, JinkelaUserCreateDTO jinkelaUserCreateDTO) {
-    var jinkelaUser = jinkelaUserRepository.findById(jinkelaUserId).orElseThrow(UserNotFoundException::new);
-    jinkelaUser.setNickname(jinkelaUserCreateDTO.getNickname());
-    jinkelaUserRepository.saveOrUpdate2(jinkelaUser);
+  public void modifyUserToDb(JinkelaUser jinkelaUser) {
+    var dbjinkelaUser = jinkelaUserRepository.findById(jinkelaUser.getId()).orElseThrow(UserNotFoundException::new);
+    jinkelaUser.setNickname(jinkelaUser.getNickname());
+    jinkelaUserRepository.saveOrUpdate2(dbjinkelaUser);
   }
 
   @Transactional

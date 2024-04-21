@@ -5,20 +5,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import dev.jinkela.demo.jinkelademo.datas.entities.JinkelaUser;
-import dev.jinkela.demo.jinkelademo.dtos.JinkelaUserCreateDTO;
-import dev.jinkela.demo.jinkelademo.dtos.ListAllJikelaUsersDTO;
 import jakarta.validation.Valid;
 
 public interface JinkelaUserService extends UserDetailsService{
   JinkelaUser loadJinkelaUserByUsername(String username);
 
-  Page<JinkelaUser> listAllJikelaUsers(ListAllJikelaUsersDTO request, Pageable pageable);
+  Page<JinkelaUser> listAllJikelaUsers(String name, Pageable pageable);
 
-  void addNewUserToDb(@Valid JinkelaUserCreateDTO jinkelaUserCreateDTO);
+  void addNewUserToDb(@Valid JinkelaUser jinkelaUser);
 
   JinkelaUser loadByJinkelaUserId(Long jinkelaUserId);
 
-  void modifyUserToDb(Long jinkelaUserId, @Valid JinkelaUserCreateDTO jinkelaUserCreateDTO);
+  void modifyUserToDb(JinkelaUser jinkelaUser);
 
   void deleteJinkelaUser(Long jinkelaUserId);
 

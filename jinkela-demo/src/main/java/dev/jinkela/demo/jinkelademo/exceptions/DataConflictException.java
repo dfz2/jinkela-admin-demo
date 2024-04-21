@@ -8,4 +8,8 @@ public class DataConflictException extends BaseJinkelaErrorResponseException {
     super(HttpStatus.CONFLICT, "提交数据存在冲突");
   }
 
+  public DataConflictException(String errorMessage) {
+    super(HttpStatus.CONFLICT, errorMessage);
+  }
+
 }

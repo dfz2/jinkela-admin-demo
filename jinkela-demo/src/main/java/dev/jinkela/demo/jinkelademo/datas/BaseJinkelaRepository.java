@@ -19,8 +19,9 @@ public interface BaseJinkelaRepository<T, ID>
             return save(entity);
         } catch (DbActionExecutionException e) {
             if (e.getCause() instanceof DuplicateKeyException) {
-                throw (DuplicateKeyException) e.getCause();
+                throw new DataConflictException(String.format("[%s]主键冲突", entity.getClass().getSimpleName()));
             }
+
             throw e;
         }
 

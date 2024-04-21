@@ -1,11 +1,7 @@
 <template>
-  <div>
-    1231315
-  </div>
+  <div>1231315</div>
 </template>
 
-<script lang="ts" setup>
-
-</script>
+<script lang="ts" setup></script>
 
 <style lang="scss" scoped></style>

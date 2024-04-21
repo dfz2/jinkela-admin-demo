@@ -2,6 +2,7 @@ package dev.jinkela.demo.jinkelademo.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.jinkela.demo.jinkelademo.datas.entities.JinkelaRole;
-import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleCreateDTO;
-import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleDeleteDTO;
-import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleListPageDTO;
-import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleModifyDTO;
 import dev.jinkela.demo.jinkelademo.services.JinkelaRoleService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -32,30 +29,37 @@ public class JinkelaRoleApiController {
 
   private final JinkelaRoleService jinkelaRoleService;
 
+
+  
   @GetMapping
-  public Page<JinkelaRole> listAllRoles(JinkelaRoleListPageDTO jinkelaRoleListPageDTO, Pageable pageable) {
-    return jinkelaRoleService.listAllRoles(jinkelaRoleListPageDTO, pageable);
+  @PreAuthorize("hasAuthority('jueseguanli2')")
+  public Page<JinkelaRole> listAllRoles(String name, Pageable pageable) {
+    return jinkelaRoleService.listAllRolesByName(name, pageable);
   }
 
-
   @GetMapping("{jinkelaRoleId}")
+  @PreAuthorize("hasAuthority('juesexiangxi')")
   public JinkelaRole getJinkelaRoleById(@PathVariable("jinkelaRoleId") @NotNull Long jinkelaRoleId) {
     return jinkelaRoleService.getJinkelaRoleById(jinkelaRoleId);
   }
 
+  
   @PostMapping
-  public void addNewRoleToDb(@RequestBody @Valid JinkelaRoleCreateDTO jinkelaRoleCreateDTO) {
-    jinkelaRoleService.addNewRoleToDb(jinkelaRoleCreateDTO);
+  @PreAuthorize("hasAuthority('juesexinzeng')")
+  public void addNewRoleToDb(@RequestBody @Valid JinkelaRole jinkelaRole) {
+    jinkelaRoleService.addNewRoleToDb(jinkelaRole);
   }
 
   @PutMapping("/{jinkelaRoleId}")
-  public void mmodifyRoleToDb(@PathVariable("jinkelaRoleId") @NotNull Long jinkelaRoleId, @RequestBody @Valid JinkelaRoleModifyDTO jinkelaRoleModifyDTO) {
-    jinkelaRoleService.mmodifyRoleToDb(jinkelaRoleId, jinkelaRoleModifyDTO);
+  @PreAuthorize("hasAuthority('juesegengxin')")
+  public void mmodifyRoleToDb(@RequestBody @Valid JinkelaRole jinkelaRole) {
+    jinkelaRoleService.mmodifyRoleToDb(jinkelaRole);
   }
 
   @DeleteMapping("/{jinkelaRoleId}")
-  public void deleteRoleFromDb(@PathVariable("jinkelaRoleId") @NotNull Long jinkelaRoleId, @RequestBody JinkelaRoleDeleteDTO jinkelaRoleDeleteDTO) {
-    jinkelaRoleService.deleteRoleFromDb(jinkelaRoleId, jinkelaRoleDeleteDTO);
+  @PreAuthorize("hasAuthority('jueseshanchu')")
+  public void deleteRoleFromDb(@PathVariable("jinkelaRoleId") @NotNull Long jinkelaRoleId) {
+    jinkelaRoleService.deleteRoleFromDb(jinkelaRoleId);
   }
 
 }

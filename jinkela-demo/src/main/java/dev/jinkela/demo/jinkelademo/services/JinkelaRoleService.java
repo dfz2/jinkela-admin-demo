@@ -4,23 +4,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import dev.jinkela.demo.jinkelademo.datas.entities.JinkelaRole;
-import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleCreateDTO;
-import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleDeleteDTO;
-import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleListPageDTO;
-import dev.jinkela.demo.jinkelademo.dtos.JinkelaRoleModifyDTO;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
 public interface JinkelaRoleService {
 
-  void addNewRoleToDb(JinkelaRoleCreateDTO jinkelaRoleCreateDTO);
+  void addNewRoleToDb(JinkelaRole jinkelaRole);
 
-  void mmodifyRoleToDb(Long jinkelaRoleId, @Valid JinkelaRoleModifyDTO jinkelaRoleModifyDTO);
+  void mmodifyRoleToDb(JinkelaRole jinkelaRole);
 
-  Page<JinkelaRole> listAllRoles(JinkelaRoleListPageDTO jinkelaRoleListPageDTO, Pageable pageable);
+  Page<JinkelaRole> listAllRolesByName(String name, Pageable pageable);
 
   JinkelaRole getJinkelaRoleById(@NotNull Long jinkelaRoleId);
 
-  void deleteRoleFromDb(@NotNull Long jinkelaRoleId, JinkelaRoleDeleteDTO jinkelaRoleDeleteDTO);
+  void deleteRoleFromDb(Long jinkelaRoleId);
 
 }
