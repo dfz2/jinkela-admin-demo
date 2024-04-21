@@ -15,7 +15,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@JsonIgnoreProperties({"password"})
+// @JsonIgnoreProperties({"password"})
 public class AuditMetadata {
 
   @CreatedBy

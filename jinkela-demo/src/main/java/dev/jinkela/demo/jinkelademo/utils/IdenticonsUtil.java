@@ -1,17 +1,14 @@
 package dev.jinkela.demo.jinkelademo.utils;
 
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.digest.DigestUtils;
-
-import com.fasterxml.jackson.databind.util.ByteBufferBackedInputStream;
-
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.image.*;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 
-import javax.imageio.ImageIO;;
+import javax.imageio.ImageIO;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.digest.DigestUtils;;
 
 public class IdenticonsUtil {
 
@@ -67,9 +64,9 @@ public class IdenticonsUtil {
     return String.format("data:image/png;base64,%s", Base64.encodeBase64String(bos.toByteArray()));
   }
 
-  public static void main(String[] args) throws Exception {
+  // public static void main(String[] args) throws Exception {
 
-    System.out.println(createImageByIdStr("superadmin"));;
-  }
+  //   System.out.println(createImageByIdStr("superadmin"));;
+  // }
 
 }

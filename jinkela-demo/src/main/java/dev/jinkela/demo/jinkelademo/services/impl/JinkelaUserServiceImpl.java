@@ -1,21 +1,21 @@
 package dev.jinkela.demo.jinkelademo.services.impl;
 
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import dev.jinkela.demo.jinkelademo.datas.entities.JinkelaUser;
+import dev.jinkela.demo.jinkelademo.datas.repositories.JinkelaMenuRepository;
 import dev.jinkela.demo.jinkelademo.datas.repositories.JinkelaUserRepository;
 import dev.jinkela.demo.jinkelademo.exceptions.UserNotFoundException;
 import dev.jinkela.demo.jinkelademo.services.JinkelaUserService;
@@ -26,13 +26,27 @@ import lombok.RequiredArgsConstructor;
 @Transactional(readOnly = true)
 class JinkelaUserServiceImpl implements JinkelaUserService {
   private final JinkelaUserRepository jinkelaUserRepository;
+  private final JinkelaMenuRepository jinkelaMenuRepository;
   private final PasswordEncoder passwordEncoder;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    JinkelaUser jinkelaUser = jinkelaUserRepository.findJinkelaUserByUsername(username).orElseThrow(() -> new UsernameNotFoundException("用户名密码错误"));
-    Set<GrantedAuthority> authorities = jinkelaUserRepository.listAllPermissionsByJinkelaUserId(jinkelaUser.getId()).stream().map(t -> new SimpleGrantedAuthority(t)).collect(Collectors.toSet());
-    jinkelaUser.setAuthorities(authorities);
+    JinkelaUser jinkelaUser = jinkelaUserRepository.findJinkelaUserByUsername(username)
+        .orElseThrow(() -> new UsernameNotFoundException("用户名密码错误"));
+    if (jinkelaUser.getId().equals(1000000L)) {
+      jinkelaUser.setAuthorities(
+          jinkelaMenuRepository.findAll()
+              .stream()
+              .filter(it -> StringUtils.hasLength(it.getPermission()))
+              .map(it -> new SimpleGrantedAuthority(it.getPermission()))
+              .collect(Collectors.toSet()));
+    } else {
+      jinkelaUser.setAuthorities(
+          jinkelaUserRepository.listAllPermissionsByJinkelaUserId(jinkelaUser.getId())
+              .stream()
+              .map(it -> new SimpleGrantedAuthority(it))
+              .collect(Collectors.toSet()));
+    }
     return jinkelaUser;
   }
 

@@ -55,6 +55,7 @@ const setFormData = async (row) => {
     id: row.id,
   });
   for (const key in state) {
+     //@ts-ignore
     if (data[key] != null && data[key] != undefined) {
       //@ts-ignore
       state[key] = data[key];

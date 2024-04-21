@@ -35,7 +35,7 @@ public class JinkelaMenu extends AuditMetadata {
 
 
   @Transient
-  private transient List<JinkelaMenu> children;
+  private List<JinkelaMenu> children;
 
   public List<JinkelaMenu> getChildren(Long parentId, List<JinkelaMenu> menuItems) {
 

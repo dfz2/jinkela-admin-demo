@@ -43,7 +43,6 @@ public class JinkelaRoleApiController {
     return jinkelaRoleService.getJinkelaRoleById(jinkelaRoleId);
   }
 
-  
   @PostMapping
   @PreAuthorize("hasAuthority('juesexinzeng')")
   public void addNewRoleToDb(@RequestBody @Valid JinkelaRole jinkelaRole) {

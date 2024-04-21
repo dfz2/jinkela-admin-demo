@@ -9,6 +9,9 @@ server:
 spring:
   application:
     name: jinkela-demo
+  jackson:
+    mapper:
+      "PROPAGATE_TRANSIENT_MARKER": true
   flyway:
     baseline-version: 1.0.0
   mvc:
