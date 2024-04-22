@@ -80,7 +80,7 @@ class JinkelaUserServiceImpl implements JinkelaUserService {
         jinkelaUser.getNickname(),
         jinkelaUser.getUsername(),
         passwordEncoder.encode("123456"));
-    jinkelaUserRepository.saveOrUpdate2(newjinkelaUser);
+    jinkelaUserRepository.saveOrUpdate(newjinkelaUser);
   }
 
   @Transactional

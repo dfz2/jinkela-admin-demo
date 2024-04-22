@@ -12,15 +12,7 @@ const popupTitle = computed(() => {
   return mode.value == "edit" ? "编辑角色" : "新增角色";
 });
 
-const state = reactive({
-  id: "",
-  name: "",
-  remark: "",
-  sort: 0,
-  version: null,
-  enabled: 0,
-  menus: [],
-});
+const state = reactive<Partial<API.JinkelaRole>>({});
 
 const rules = {
   name: [
@@ -34,7 +26,7 @@ const rules = {
 
 const handleSubmit = async () => {
   await formRef.value?.validate();
-  const params = { ...state, menuIds: state.menus.join() };
+  const params = { ...state};
   mode.value == "edit" ? await roleEdit(params) : await roleAdd(params);
   popupRef.value?.close();
   ElMessage.success("操作成功");
@@ -50,14 +42,13 @@ const open = (type = "add") => {
   popupRef.value?.open();
 };
 
-const setFormData = async (row) => {
-  const data = await roleDetail({
+const setFormData = async (row: API.JinkelaRole) => {
+  const data: Record<string, any> = await roleDetail({
     id: row.id,
   });
   for (const key in state) {
-     //@ts-ignore
     if (data[key] != null && data[key] != undefined) {
-      //@ts-ignore
+      // @ts-ignore
       state[key] = data[key];
     }
   }

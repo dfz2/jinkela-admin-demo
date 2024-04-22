@@ -4,7 +4,7 @@ import { getUserinfoApi, getMenusApi } from "@/api/user";
 import { type RouteRecordRaw } from 'vue-router'
 
 interface UserState {
-  userInfo: Partial<API.JinkelaUser>;
+  userInfo: API.JinkelaUser;
   routes: RouteRecordRaw[];
   menus: API.JinkelaMenu[];
   perms: any[];
